@@ -1,0 +1,56 @@
+{
+  "name": "scjdt-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/icons": "^4.9.1",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.19.2",
+    "bootstrap": "^4.4.1",
+    "bootstrap-icons": "^1.0.0-alpha2",
+    "bootstrap-material-design-icons": "^2.2.0",
+    "bootswatch": "^4.4.1",
+    "classnames": "^2.2.6",
+    "es6-promise": "^4.2.8",
+    "isomorphic-fetch": "^2.2.1",
+    "primeflex": "^1.0.0",
+    "primeicons": "^2.0.0",
+    "primereact": "^4.1.2",
+    "react": "^16.13.0",
+    "react-bootstrap-icons": "^1.0.0-alpha2",
+    "react-dom": "^16.13.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.0",
+    "react-transition-group": "^4.3.0",
+    "styled-components": "^5.0.1",
+    "toastr": "^2.1.4",
+    "yarn": "^1.22.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0"
+  }
+}
