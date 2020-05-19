@@ -1,0 +1,36 @@
+.dashborad-container {
+    width: 100%;
+    max-width: 1180px;
+    padding: 0 30px;
+    margin: 32px auto;
+}
+
+.dashborad-container header {
+    display: flex;
+    align-items: center;
+}
+
+.dashborad-container header img {
+    width: 60px;
+    height: 60px;
+}
+
+.dashborad-container header span {
+    font-size: 20px;
+    margin-left: 24px;
+}
+
+.dashborad-container header button {
+    height: 60px;
+    width: 60px;
+    margin-left: auto;
+    margin-top: 0;
+    border-radius: 4px;
+    border: 1px solid #dcdce6;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+
+.dashborad-container header button:hover {
+    border-color: #999;
+}

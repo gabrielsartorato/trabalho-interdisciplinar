@@ -1,0 +1,18 @@
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+
+import Login from './pages/Login';
+import UserCreate from './pages/User';
+import Dashboard from './pages/Dashboard'
+
+export default function Routes() {
+    return (
+        <BrowserRouter>
+            <Switch>
+                <Route path="/" exact component={Login}/>
+                <Route path="/user-create" component={UserCreate}/>
+                <Route path="/dashboard" component={Dashboard}/>
+            </Switch>
+        </BrowserRouter>
+    );
+}
