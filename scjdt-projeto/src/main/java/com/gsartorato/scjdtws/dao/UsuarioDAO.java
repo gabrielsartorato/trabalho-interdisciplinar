@@ -22,7 +22,7 @@ public class UsuarioDAO {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "INSERT INTO usuario (nomeUsuario, senha) VALUES (?, ?)";
+		String sql = "INSERT INTO usuario (\"nomeUsuario\", senha) VALUES (?, ?)";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		
@@ -37,9 +37,9 @@ public class UsuarioDAO {
 		Connection conn = DBConfig.getConnection();
 		
 		String sql = "UPDATE usuario "
-				+ "SET nomeUsuario = ?, "
+				+ "SET \"nomeUsuario\" = ?, "
 				+ "senha = ? "
-				+ "WHERE idUsuario = ? ";
+				+ "WHERE \"idUsuario\" = ? ";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		
@@ -54,7 +54,7 @@ public class UsuarioDAO {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "DELETE FROM usuario WHERE idUsuario = ?";
+		String sql = "DELETE FROM usuario WHERE \"idUsuario\" = ?";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, idUsuario);
@@ -97,7 +97,7 @@ public class UsuarioDAO {
 		
 			Connection conn = DBConfig.getConnection();
 			
-			String sql = "SELECT * from usuario where nomeUsuario = ? and senha = ?";
+			String sql = "SELECT * from usuario where \"nomeUsuario\" = ? and senha = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, usuario1);
 			stmt.setString(2, senha1);
@@ -134,7 +134,7 @@ public class UsuarioDAO {
 		
 		Usuario usuario = null;
 		
-		String sql = "SELECT * FROM usuario WHERE idUsuario=?";
+		String sql = "SELECT * FROM usuario WHERE \"idUsuario\" = ?";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, idUsuario);

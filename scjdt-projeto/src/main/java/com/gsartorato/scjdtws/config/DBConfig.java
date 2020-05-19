@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class DBConfig {
 	
 	public static Connection getConnection() throws SQLException, ClassNotFoundException {
-		Class.forName("com.mysql.jdbc.Driver");
-		return DriverManager.getConnection("jdbc:mysql://localhost:3306/SCJDT", "root", "123456");
+		Class.forName("org.postgresql.Driver");
+		return DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/scjdt", "postgres", "postgres");
 	}
 
 }

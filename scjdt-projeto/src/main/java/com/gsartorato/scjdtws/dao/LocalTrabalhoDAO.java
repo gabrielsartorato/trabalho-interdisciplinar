@@ -21,7 +21,7 @@ public class LocalTrabalhoDAO {
 		
 		try {
 			
-			String sql = "INSERT INTO localTrabalho (nomeLocalTrabalho) VALUES (?)";
+			String sql = "INSERT INTO \"localTrabalho\" (\"nomeLocalTrabalho\") VALUES (?)";
 			
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, localT.getNomeLocalTrabalho());
@@ -37,7 +37,7 @@ public class LocalTrabalhoDAO {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "UPDATE localTrabalho SET nomeLocalTrabalho = ? where idLocalTrabalho = ?";
+		String sql = "UPDATE \"localTrabalho\" SET \"nomeLocalTrabalho\" = ? where \"idLocalTrabalho\" = ?";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, localT.getNomeLocalTrabalho());
@@ -52,7 +52,7 @@ public class LocalTrabalhoDAO {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "DELETE FROM localTrabalho WHERE idLocalTrabalho = ?";
+		String sql = "DELETE FROM \"localTrabalho\" WHERE \"idLocalTrabalho\" = ?";
 		
 		try {
 			
@@ -72,7 +72,7 @@ public class LocalTrabalhoDAO {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "Select * from localTrabalho where idLocalTrabalho = ?";
+		String sql = "Select * from \"localTrabalho\" where \"idLocalTrabalho\" = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, idLocal);
 		
@@ -94,7 +94,7 @@ public class LocalTrabalhoDAO {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "SELECT * FROM localTrabalho";
+		String sql = "SELECT * FROM \"localTrabalho\"";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		
