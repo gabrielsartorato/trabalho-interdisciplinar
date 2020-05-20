@@ -5,6 +5,7 @@ import './style.css';
 
 import api from '../../services/api'
 
+
 import timerImg from '../../assets/clock.png';
 
 export default function Login() {
