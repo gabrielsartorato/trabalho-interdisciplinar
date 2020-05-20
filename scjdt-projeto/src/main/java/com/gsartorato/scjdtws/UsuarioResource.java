@@ -104,11 +104,16 @@ public class UsuarioResource {
 		String msg = "";
 		try {
 			usuarioDAO.autenticarUsuario(usuario);
+			Usuario usuario2 = new Usuario();
 			
-			return Response.ok(usuario).build();
+			usuario2.setIdUsuario(usuario.getIdUsuario());
+			usuario2.setNomeUsuario(usuario.getNomeUsuario());
+			
+			return Response.ok(usuario2).build();
 			
 		}catch (RegraNegocioException e) {
 			msg = e.getMessage();
+			System.out.println(msg);
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).build();
 
 		}

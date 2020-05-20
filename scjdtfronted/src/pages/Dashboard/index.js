@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import { FiPower } from 'react-icons/fi'
 import timerSvg from '../../assets/clock.svg'
@@ -7,12 +7,24 @@ import timerSvg from '../../assets/clock.svg'
 import './style.css'
 
 export default function Dashboard() {
+    const userName = localStorage.getItem('nomeUsuario')
+    const history = useHistory()
+    
+    let user = userName.slice(0, 1).toUpperCase()
+
+    user = user + userName.substring(1, userName.length)
+
+    function handleLogout() {
+        localStorage.clear();
+        history.push('/')
+    }
+
     return (
         <div className="dashboard-container">
             <header>
                 <img src={timerSvg} alt="timer"/>
-                <span>Bem vindo, Gabriel</span>
-                <button type="button">
+                <span>Bem vindo, {user} </span>
+                <button onClick={() => handleLogout()} type="button">
                     <FiPower size={18} color="#e02041"/>
                 </button>
             </header>
