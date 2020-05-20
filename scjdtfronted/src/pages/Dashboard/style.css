@@ -1,26 +1,26 @@
-.dashborad-container {
+.dashboard-container {
     width: 100%;
     max-width: 1180px;
     padding: 0 30px;
     margin: 32px auto;
 }
 
-.dashborad-container header {
+.dashboard-container header {
     display: flex;
     align-items: center;
 }
 
-.dashborad-container header img {
+.dashboard-container header img {
     width: 60px;
     height: 60px;
 }
 
-.dashborad-container header span {
+.dashboard-container header span {
     font-size: 20px;
     margin-left: 24px;
 }
 
-.dashborad-container header button {
+.dashboard-container header button {
     height: 60px;
     width: 60px;
     margin-left: auto;
@@ -31,6 +31,36 @@
     transition: border-color 0.2s;
 }
 
-.dashborad-container header button:hover {
+.dashboard-container header button:hover {
     border-color: #999;
+}
+
+.dashboard-container .dashboard-title {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    font-size: 32px;
+    text-align: center;
+}
+
+.button-color {
+    background: #F1952E;
+}
+
+.dashboard-container .dashboard-itens {
+    width: 100%;
+    max-width: 940px;
+    margin: 32px auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 24px;
+}
+
+.dashboard-container .dashboard-itens .itens {
+    background: #fff;
+    padding: 24px;
+    border-radius: 8px;
+}
+
+.dashboard-container .dashboard-itens h2 {
+    color: #777;
 }
