@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { useHistory } from 'react-router-dom'
 
-import { FiPower, FiTrash, FiEdit } from 'react-icons/fi'
+import { FiPower, FiTrash, FiEdit, FiHome } from 'react-icons/fi'
 import timerSvg from '../../assets/clock.svg'
 
 import api from '../../services/api'
@@ -21,6 +21,10 @@ export default function Userlist() {
     function handleLogout() {
         localStorage.clear();
         history.push('/')
+    }
+
+    function handleDashboard() {
+        history.push('/dashboard')
     }
 
     useEffect(() => {
@@ -44,9 +48,12 @@ export default function Userlist() {
             <header>
                 <img src={timerSvg} alt="timer" />
                 <span>Bem vindo, {user} </span>
-                <button onClick={() => handleLogout()} type="button">
-                    <FiPower size={18} color="#e02041" />
-                </button>
+                <div className="button-group">
+                    <button onClick={() => handleDashboard()}><FiHome size={18}/></button>
+                    <button onClick={() => handleLogout()} type="button">
+                        <FiPower size={18} color="#e02041" />
+                    </button>
+                </div>
             </header>
 
             <div className="table-container">
@@ -62,7 +69,7 @@ export default function Userlist() {
                             <tr key={user.idUsuario} className="tbody">
                                 <td>{user.nomeUsuario}</td>
                                 <td className="action">
-                                    <a href="/dashboard"><FiEdit /></a>
+                                    <a href={`/user-edit/${user.idUsuario}`}><FiEdit /></a>
                                     <button onClick={() => handleDeleteUser(user.idUsuario)}><FiTrash /></button>
                                 </td>
                             </tr>

@@ -36,7 +36,7 @@ export default function Dashboard() {
                     <h2>Usuários</h2>
                     <div className="button-group">
                         <Link className="button" to="/user-create">Inserir</Link>
-                        <Link className="button button-color" to="/">Consultar</Link>
+                        <Link className="button button-color" to="/user-list">Consultar</Link>
                     </div>
                 </div>
                 <div className="itens">

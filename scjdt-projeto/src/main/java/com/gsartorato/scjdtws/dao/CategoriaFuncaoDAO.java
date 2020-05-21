@@ -22,7 +22,6 @@ public class CategoriaFuncaoDAO {
 	
 	public void inserirCategoria(CategoriaFuncao catFnc) throws Exception, SQLException {
 		
-		Connection conn = DBConfig.getConnection();
 		Connection conexao = conSing.getConexao();
 		
 		String sql = "INSERT INTO \"categoriaFuncao\" (\"nomeCategoria\", \"salarioCategoria\", \"descricaoCategoria\")"
