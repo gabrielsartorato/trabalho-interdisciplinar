@@ -46,6 +46,13 @@ export default function Dashboard() {
                         <Link className="button button-color" to="/">Consultar</Link>
                     </div>
                 </div>
+                <div className="itens">
+                    <h2>Categoria de Função</h2>
+                    <div className="button-group">
+                        <Link className="button" to="/category">Inserir</Link>
+                        <Link className="button button-color" to="/">Consultar</Link>
+                    </div>
+                </div>
             </div>
         </div>
     );

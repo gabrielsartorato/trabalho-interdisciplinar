@@ -1,4 +1,4 @@
-.register-container {
+.register-category {
     width: 100%;
     max-width: 1120px;
     height: 100vh;
@@ -7,9 +7,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
 }
 
-.register-container .content {
+.register-category .category-instruction {
     width: 100%;
     padding: 96px;
     background: #f0f0f5;
@@ -23,27 +24,33 @@
 
 }
 
-.register-container .content section {
+.register-category .category-instruction section {
     width: 100%;
     max-width: 380px;
 }
 
-.register-container .content section h1 {
-    margin: 8px 0 32px;
+.register-category .category-instruction section h1 {
     font-size: 32px;
+    margin: 8px 0 32px;
 }
 
-.register-container .content section p {
+.register-category .category-instruction section p {
     font-size: 18px;
     color: #737380;
     line-height: 32px;
 }
 
-.register-container .content form {
+.register-category .category-instruction form {
     width: 100%;
     max-width: 450px;
 }
 
-.register-container .content input {
+.register-category .category-instruction form input + input {
     margin-top: 8px;
+}
+
+.register-category .category-instruction form textarea {
+    resize: vertical;
+    margin-top: 8px;
+    padding: 8px 24px;
 }

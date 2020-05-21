@@ -1,7 +1,7 @@
 CREATE TABLE "categoriaFuncao" (
   "idCategoria" SERIAL PRIMARY KEY,
   "nomeCategoria" text NOT NULL,
-  "salarioCategoria" int,
+  "salarioCategoria" numeric (5,2),
   "descricaoCategoria" text
 );
 

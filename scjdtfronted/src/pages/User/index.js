@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+
 import { FiArrowLeft } from 'react-icons/fi'
 
 import api from '../../services/api'
 import './style.css'
 
 export default function UserCreate() {
+
+    const history = useHistory()
 
     const [name, setName ] = useState('')
     const [password, setPassword ] = useState('')
@@ -19,9 +23,9 @@ export default function UserCreate() {
         }
 
         try {
-            const response = await api.post('usuario/add', data)
+            await api.post('usuario/add', data)
 
-        alert(`${response.data}`)
+            history.push('/dashboard')
         }
         catch(err) {
             alert('Erro no cadastro, tente novamente!')

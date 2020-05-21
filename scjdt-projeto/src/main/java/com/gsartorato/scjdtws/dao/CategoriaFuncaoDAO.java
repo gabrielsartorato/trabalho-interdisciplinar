@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import com.gsartorato.scjdtws.config.ConfigSingleton;
 import com.gsartorato.scjdtws.config.DBConfig;
 import com.gsartorato.scjdtws.entidade.CategoriaFuncao;
 
@@ -17,16 +17,20 @@ public class CategoriaFuncaoDAO {
 	
 	CategoriaFuncao catfunc = null;
 	
+	ConfigSingleton conSing = ConfigSingleton.getInstancy();
+	Connection conexao = conSing.getConexao();
+	
 	public void inserirCategoria(CategoriaFuncao catFnc) throws Exception, SQLException {
 		
 		Connection conn = DBConfig.getConnection();
+		Connection conexao = conSing.getConexao();
 		
-		String sql = "INSERT INTO categoriaFuncao (nomeCategoria, salarioCategoria, descricaoCategoria) "
+		String sql = "INSERT INTO \"categoriaFuncao\" (\"nomeCategoria\", \"salarioCategoria\", \"descricaoCategoria\")"
 				+ "VALUES (?, ?, ?)";
 		try {
 			
 			
-			PreparedStatement stmt = conn.prepareStatement(sql);
+			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, catFnc.getNomeCategoria());
 			stmt.setBigDecimal(2, catFnc.getSalarioCategoria());
 			stmt.setString(3, catFnc.getDescricaoCategoria());
