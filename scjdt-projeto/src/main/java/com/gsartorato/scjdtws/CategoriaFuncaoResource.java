@@ -47,8 +47,8 @@ public class CategoriaFuncaoResource {
 			return Response.status(401).entity(msg).build();
 		}
 		
-		
 	}
+	
 	
 	@PUT
 	@Path("/edit/{id}")
@@ -114,6 +114,27 @@ public class CategoriaFuncaoResource {
 		}
 		
 		return listaCategoria;
+		
+	}
+	
+	@GET
+	@Path("/buscar/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findById(@PathParam("id") int idCategoria) {
+		
+		String msg = "";
+		
+		try {
+			CategoriaFuncao catFnc = catDAO.findById(idCategoria);
+			
+			return Response.status(201).entity(catFnc).build();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			msg = "Não foi possivel buscar a categoria";
+			return Response.status(401).entity(msg).build();
+		}
 		
 	}
 

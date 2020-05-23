@@ -4,7 +4,7 @@ import { FiArrowLeft } from 'react-icons/fi'
 import { Link, useHistory } from 'react-router-dom'
 
 import './style.css'
-import api from '../../services/api'
+import api from '../../../services/api'
 
 export default function Category() {    
     const history = useHistory()
@@ -36,8 +36,8 @@ export default function Category() {
         <div className="register-category">
             <div className="category-instruction">
                 <section>
-                    <h1>Cadastro de categoria de funções</h1>
-                    <p>Faça o cadastro de uma nova categoria de função</p>
+                    <h1>Cadastro de funções</h1>
+                    <p>Faça o cadastro de uma nova função</p>
 
                     <Link className="back-link" to="/dashboard">
                             <FiArrowLeft size={16} color="#E02041"/>

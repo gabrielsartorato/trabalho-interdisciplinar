@@ -3,20 +3,19 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { FiPower, FiTrash, FiEdit, FiHome } from 'react-icons/fi'
-import timerSvg from '../../assets/clock.svg'
+import timerSvg from '../../../assets/clock.svg'
+import { adjustName } from '../../../libs/utils'
 
-import api from '../../services/api'
+import api from '../../../services/api'
 
 import './style.css'
 
-export default function Userlist() {
+export default function Categorylist() {
     const userName = localStorage.getItem('nomeUsuario')
     const history = useHistory()
-    const [userList, setUserList] = useState([]);
+    const [categoryList, setCategoryList] = useState([]);
 
-    let user = userName.slice(0, 1).toUpperCase()
-
-    user = user + userName.substring(1, userName.length)
+    const user = adjustName(userName)
 
     function handleLogout() {
         localStorage.clear();
@@ -28,18 +27,28 @@ export default function Userlist() {
     }
 
     useEffect(() => {
-        api.get('usuario/list').then(response => {
-            setUserList(response.data)
+        api.get('categoria/list').then(response => {
+            setCategoryList(response.data)
         })
     }, [])
 
-    async function handleDeleteUser(id) {
+    function handleConfirm (category) {
+        const confirmation = window.confirm(`Deseja realmente deletar o usuário ${category.nomeCategoria}`)
+
+        if(confirmation)
+            handleDeleteCategory(category.idCategoria)
+
+        window.event.preventDefault()
+    }
+
+
+    async function handleDeleteCategory(id) {
         try {
-            await api.delete(`usuario/delete/${id}`)
-            setUserList(userList.filter(user => user.idUsuario !== id))
+            await api.delete(`categoria/delete/${id}`)
+            setCategoryList(categoryList.filter(category => category.idCategoria !== id))
         }
         catch (err) {
-            alert('Erro ao deletar o caso, tete novamente!')
+            alert('Erro ao deletar a categoria, tente novamente!')
         }
     }
 
@@ -60,17 +69,17 @@ export default function Userlist() {
                 <table className="user-list">
                     <thead>
                         <tr>
-                            <th>Usuário</th>
+                            <th>Funções</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {userList.map(user => (
-                            <tr key={user.idUsuario} className="tbody">
-                                <td>{user.nomeUsuario}</td>
+                        {categoryList.map(category => (
+                            <tr key={category.idCategoria} className="tbody">
+                                <td>{category.nomeCategoria}</td>
                                 <td className="action">
-                                    <a href={`/user-edit/${user.idUsuario}`}><FiEdit /></a>
-                                    <button onClick={() => handleDeleteUser(user.idUsuario)}><FiTrash /></button>
+                                    <a href={`/category-edit/${category.idCategoria}`}><FiEdit /></a>
+                                    <button onClick={() => handleConfirm(category)}><FiTrash /></button>
                                 </td>
                             </tr>
                         ))}

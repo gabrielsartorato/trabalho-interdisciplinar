@@ -1,43 +1,39 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 
 import { FiArrowLeft } from 'react-icons/fi'
 
-import api from '../../services/api'
+import api from '../../../services/api'
 import './style.css'
 
-export default function UserCreate(props) {
-
-    const user = props.match.params.id
+export default function UserCreate() {
 
     const history = useHistory()
 
     const [name, setName ] = useState('')
     const [password, setPassword ] = useState('')
 
-    useEffect(() => {
-        api.get(`usuario/buscar/${user}`).then(response => {
-            setName(response.data.nomeUsuario)
-            setPassword(response.data.senha)
-        })
-    }, [])
-
-    async function handleEdit(e) {
+    async function handleRegister(e) {
         e.preventDefault();
 
-        const data = {
-            nomeUsuario: name,
-            senha: password
+        if(name === "" || password === "") {
+            return alert('Preencha todos os campos')
         }
-
+        
+        const data = {
+            nomeUsuario: name.toUpperCase(),
+            senha: password
+        }   
+        
         try {
-            await api.put(`usuario/edit/${user}`, data)
+            
+            await api.post('usuario/add', data)
 
             history.push('/dashboard')
         }
         catch(err) {
-            alert('Erro ao editar, tente novamente!')
+            alert('Erro no cadastro, tente novamente!')
         }
     }
 
@@ -53,7 +49,7 @@ export default function UserCreate(props) {
                         Voltar
                     </Link>
                 </section>
-                <form onSubmit={handleEdit}>
+                <form onSubmit={handleRegister}>
                     <input 
                         placeholder="Nome do Usuário"
                         value={name}
@@ -65,7 +61,7 @@ export default function UserCreate(props) {
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                     />
-                    <button className="button">Editar</button>
+                    <button className="button">Cadastrar</button>
                 </form>
             </div>
         </div>

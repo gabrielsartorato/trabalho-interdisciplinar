@@ -17,7 +17,7 @@ export default function Login() {
         e.preventDefault()
 
         const data = {
-            nomeUsuario: user,
+            nomeUsuario: user.toUpperCase(),
 	        senha: password
         }
         try {

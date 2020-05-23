@@ -45,11 +45,11 @@ public class CategoriaFuncaoDAO {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "UPDATE categoriaFuncao SET "
-				+ "nomeCategoria = ?, "
-				+ "salarioCategoria = ?, "
-				+ "descricaoCategoria = ?" 
-				+ "WHERE idCategoria = ?";
+		String sql = "UPDATE \"categoriaFuncao\" SET "
+				+ "\"nomeCategoria\" = ?, "
+				+ "\"salarioCategoria\" = ?, "
+				+ "\"descricaoCategoria\" = ?" 
+				+ "WHERE \"idCategoria\" = ?";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, catFnc.getNomeCategoria());
@@ -65,7 +65,7 @@ public class CategoriaFuncaoDAO {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "DELETE FROM categoriaFuncao WHERE idCategoria = ?";
+		String sql = "DELETE FROM \"categoriaFuncao\" WHERE \"idCategoria\" = ?";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, idCategoria);
@@ -78,7 +78,7 @@ public class CategoriaFuncaoDAO {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "SELECT * FROM categoriaFuncao";
+		String sql = "SELECT * FROM \"categoriaFuncao\"";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		
@@ -97,6 +97,31 @@ public class CategoriaFuncaoDAO {
 		}
 		
 		return listaCategoria;
+	}
+	
+	public CategoriaFuncao findById(int idCategoria) throws Exception, SQLException {
+		Connection conn = DBConfig.getConnection();
+		
+		CategoriaFuncao catFnc = null;
+		
+		String sql = "SELECT * FROM \"categoriaFuncao\" WHERE \"idCategoria\" = ?";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, idCategoria);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			catFnc = new CategoriaFuncao();
+			
+			catFnc.setIdCategoria(rs.getInt("idCategoria"));
+			catFnc.setNomeCategoria(rs.getString("nomeCategoria"));
+			catFnc.setSalarioCategoria(rs.getBigDecimal("salarioCategoria"));
+			catFnc.setDescricaoCategoria(rs.getString("descricaoCategoria"));
+
+		}
+		
+		return catFnc;
 	}
 
 }
