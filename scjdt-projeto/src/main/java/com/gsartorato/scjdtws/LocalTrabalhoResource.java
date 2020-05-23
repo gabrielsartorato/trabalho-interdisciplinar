@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 
 import com.gsartorato.scjdtws.dao.LocalTrabalhoDAO;
 import com.gsartorato.scjdtws.entidade.LocalTrabalho;
+import com.gsartorato.scjdtws.exception.RegraNegocioException;
 
 @Path("localtrabalho")
 public class LocalTrabalhoResource {
@@ -32,7 +33,7 @@ public class LocalTrabalhoResource {
 	@Path("/add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response addLocal(LocalTrabalho localT) {
+	public Response addLocal(LocalTrabalho localT) throws Exception {
 		String msg = "";
 		
 		try {
@@ -42,9 +43,10 @@ public class LocalTrabalhoResource {
 			msg = "Local de trabalho inseiro com sucesso: " + localT.getNomeLocalTrabalho();
 			
 			return Response.status(Response.Status.CREATED).entity(msg).build();
-		}catch (Exception e) {
-			e.printStackTrace();
-			msg = "Não foi possivel inserir o local de trabalho";
+		}catch (RegraNegocioException e) {
+			
+			msg = e.getMessage();
+			System.out.println(msg);
 			
 			return Response.status(401).entity(msg).build();
 		}
@@ -117,6 +119,27 @@ public class LocalTrabalhoResource {
 		}catch (Exception e) {
 			e.printStackTrace();
 			String msg = "Não foi possivel exibir a lista";
+			return Response.status(401).entity(msg).build();
+		}
+		
+	}
+	
+	@GET
+	@Path("/buscar/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findById(@PathParam("id") int idLocalTrabalho) {
+		
+		String msg = "";
+		
+		try {
+			LocalTrabalho localtrab = localDAO.findById(idLocalTrabalho);
+			
+			return Response.status(201).entity(localtrab).build();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			msg = "Não foi possivel buscar a categoria";
 			return Response.status(401).entity(msg).build();
 		}
 		

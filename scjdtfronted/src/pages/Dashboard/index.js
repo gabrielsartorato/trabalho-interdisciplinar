@@ -41,8 +41,8 @@ export default function Dashboard() {
                 <div className="itens">
                     <h2>Locais de trabalho</h2>
                     <div className="button-group">
-                        <Link className="button" to="/">Inserir</Link>
-                        <Link className="button button-color" to="/">Consultar</Link>
+                        <Link className="button" to="/local-create">Inserir</Link>
+                        <Link className="button button-color" to="/local-list">Consultar</Link>
                     </div>
                 </div>
                 <div className="itens">

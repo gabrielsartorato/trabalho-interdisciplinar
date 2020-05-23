@@ -42,9 +42,8 @@ public class UsuarioResource {
 			msg = "Usuario criado com sucesso: " + usuario.getNomeUsuario();
 			
 			return Response.status(Response.Status.CREATED).entity(msg).build();
-		}catch (Exception e) {
-			e.printStackTrace();
-			msg = "Não foi possivel criar o usuario.";
+		}catch (RegraNegocioException e) {
+			msg = e.getMessage();
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).build();
 		}
 		

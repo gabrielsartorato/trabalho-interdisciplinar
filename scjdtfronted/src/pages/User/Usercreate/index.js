@@ -28,12 +28,14 @@ export default function UserCreate() {
         
         try {
             
-            await api.post('usuario/add', data)
+            const response = await api.post('usuario/add', data)
 
+            alert(response.data)
+            
             history.push('/dashboard')
         }
         catch(err) {
-            alert('Erro no cadastro, tente novamente!')
+            alert(err.response.data)
         }
     }
 

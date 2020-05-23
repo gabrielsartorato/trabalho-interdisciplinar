@@ -30,14 +30,21 @@ public class UsuarioDAO {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "INSERT INTO usuario (\"nomeUsuario\", senha, created_at) VALUES (?, ?, ?)";
+		if(findByName(usuario.getNomeUsuario()) == null) {
 		
-		PreparedStatement stmt = conn.prepareStatement(sql);
+			String sql = "INSERT INTO usuario (\"nomeUsuario\", senha, created_at) VALUES (?, ?, ?)";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, usuario.getNomeUsuario());
+			stmt.setString(2, usuario.getSenha());
+			stmt.setTimestamp(3, ts);
+			stmt.execute();
 		
-		stmt.setString(1, usuario.getNomeUsuario());
-		stmt.setString(2, usuario.getSenha());
-		stmt.setTimestamp(3, ts);
-		stmt.execute();
+		}
+		else {
+			throw new RegraNegocioException("Nome para usuário já existente, tente outro!");
+		}
 		
 	}
 	
@@ -156,6 +163,29 @@ public class UsuarioDAO {
 			usuario.setIdUsuario(rs.getInt("idUsuario"));
 			usuario.setNomeUsuario(rs.getString("nomeUsuario"));
 			usuario.setSenha(rs.getString("senha"));
+		}
+		
+		return usuario;
+		
+	}
+	
+	public Usuario findByName(String name) throws Exception, SQLException {
+		
+		Connection conn = DBConfig.getConnection();
+		
+		Usuario usuario = null;
+		
+		String sql = "SELECT * FROM usuario WHERE \"nomeUsuario\" = ?";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, name);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		if(rs.next()) {
+			usuario = new Usuario();
+
+			usuario.setNomeUsuario(rs.getString("nomeUsuario"));
 		}
 		
 		return usuario;

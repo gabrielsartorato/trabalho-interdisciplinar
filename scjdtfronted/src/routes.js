@@ -12,6 +12,10 @@ import Categorycreate from './pages/Category/Categorycreate'
 import Categoryedit from './pages/Category/Categoryedit'
 import Categorylist from './pages/Category/Categorylist'
 
+import Localcreate from './pages/Localwork/Localcreate'
+import Locallist from './pages/Localwork/Locallist'
+import Localedit from './pages/Localwork/Localedit'
+
 export default function Routes() {
     return (
         <BrowserRouter>
@@ -26,6 +30,10 @@ export default function Routes() {
                 <Route path="/category" component={Categorycreate}/>
                 <Route path="/category-edit/:id" component={Categoryedit}/>
                 <Route path="/category-list/" component={Categorylist}/>
+
+                <Route path="/local-create" component={Localcreate}/>
+                <Route path="/local-list" component={Locallist}/>
+                <Route path="/local-edit/:id" component={Localedit}/>
             </Switch>
         </BrowserRouter>
     );
