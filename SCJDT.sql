@@ -20,6 +20,30 @@ CREATE TABLE "usuario" (
   "updated_at" timestamp
 );
 
+CREATE TABLE "colaborador" (
+  "idColaborador" SERIAL PRIMARY KEY,
+  "nomeColaborador" text NOT NULL,
+  "dataNascimento" timestamp NOT NULL,
+  "rg" text NOT NULL,
+  "cpf" text NOT NULL,
+  "email" text,
+  "cargaHoraria" time,
+  "tipoMoradia" text,
+  "cep" text,
+  "rua" text,
+  "numero" text,
+  "complemento" text,
+  "bairro" text,
+  "cidade" text,
+  "estado" text,
+  "id_funcao" int,
+  "ativo" int,
+  "created_at" timestamp,
+  "updated_at" timestamp
+);
+
+ALTER TABLE "colaborador" ADD FOREIGN KEY ("id_funcao") REFERENCES "categoriaFuncao" ("idCategoria");
+
 -- create procedure
 CREATE FUNCTION trigger_set_timestamp()
 RETURNS TRIGGER AS $$

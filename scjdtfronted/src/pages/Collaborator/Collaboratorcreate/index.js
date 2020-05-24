@@ -8,9 +8,21 @@ import api from '../../../services/api'
 
 export default function Category() {    
     const history = useHistory()
+
     const [name, setName] = useState('')
-    const [salary, setSalary] = useState('')
-    const [description, setDescription] = useState('')
+    const [birthDate, setBirthDate] = useState('')
+    const [rg, setRg] = useState('')
+    const [cpf, setCpf] = useState('')
+    const [email, setEmail] = useState('')
+    const [age, setAge] = useState('')
+    const [cep, setCep] = useState('')
+    const [address, setAddress] = useState('')
+    const [number, setNumber] = useState('')
+    const [complement, setComplement] = useState('')
+    const [neighborhood, setNeighborhood] = useState('')
+    const [city, setCity] = useState('')
+    const [state, setState] = useState('')
+    const [idFunction, setIdFunction] = useState('')
 
     async function handleRegisterCategory(e) {
         e.preventDefault()
@@ -21,10 +33,6 @@ export default function Category() {
             descricaoCategoria: description
         }
 
-        if(name === "" || salary === "" || description === "") {
-            return alert('Todos os campos devem ser preenchidos!')
-        }
-        
         try {
             const response = await api.post('categoria/add', data)
 
