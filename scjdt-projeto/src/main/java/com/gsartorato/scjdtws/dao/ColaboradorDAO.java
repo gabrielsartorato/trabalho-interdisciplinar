@@ -71,6 +71,51 @@ public class ColaboradorDAO {
 		
 	}
 	
+	public void editColaborador(Colaborador col, int idColaborador) throws Exception, SQLException {
+		
+		Connection conn = DBConfig.getConnection();
+		
+		String sql = "UPDATE colaborador "
+				+ "SET \"nomeColaborador\" = ?, "
+				+ "\"dataNascimento\" = ?::date, "
+				+ "rg = ?, cpf = ?, "
+				+ "email = ?, \"cargaHoraria\" = ?::time, "
+				+ "\"tipoMoradia\" = ?, cep = ?, "
+				+ "rua =?, numero = ?, complemento = ?, "
+				+ "bairro = ?, cidade = ?, estado = ?, "
+				+ "id_funcao = ?, ativo = ? "
+				+ "WHERE \"idColaborador\" = ? ";
+		
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, col.getNomeColaborador());
+			stmt.setString(2, col.getDataNascimento());
+			stmt.setString(3, col.getRg());
+			stmt.setString(4, col.getCpf());
+			stmt.setString(5, col.getEmail());
+			stmt.setString(6, col.getCargaHoraria());
+			stmt.setString(7, col.getTipoMoradia());
+			stmt.setString(8, col.getCep());
+			stmt.setString(9, col.getRua());
+			stmt.setString(10, col.getNumero());
+			stmt.setString(11, col.getComplemento());
+			stmt.setString(12, col.getBairro());
+			stmt.setString(13, col.getCidade());
+			stmt.setString(14, col.getEstado());
+			stmt.setInt(15, col.getId_funcao());
+			stmt.setInt(16, col.getAtivo());
+			stmt.setInt(17, idColaborador);
+			
+			stmt.execute();
+			stmt.close();
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public int checkIfExistActive(Colaborador col) throws Exception, SQLException {
 		
 		Connection conn = DBConfig.getConnection();

@@ -60,6 +60,25 @@ public class ColaboradorResource {
 		}
 		
 	}
+	
+	@PUT
+	@Path("/edit/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response editColaborador(Colaborador col,@PathParam("id") int idColaborador) {
+		String msg = "";
+		
+		try {
+			colDao.editColaborador(col, idColaborador);
+			
+			return Response.status(201).entity(msg).build();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			msg = "Não foi possivel alterar o colaborador!";
+			return Response.status(401).entity(msg).build();
+		}
+	}
 
 
 }
