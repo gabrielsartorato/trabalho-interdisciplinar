@@ -16,6 +16,10 @@ import Localcreate from './pages/Localwork/Localcreate'
 import Locallist from './pages/Localwork/Locallist'
 import Localedit from './pages/Localwork/Localedit'
 
+import Collaboratorcreate from './pages/Collaborator/Collaboratorcreate'
+// import Collaboratoredit from './pages/Collaborator/Collaboratoredit'
+// import Collaboratorlist from './pages/Collaborator/Collaboratorlist'
+
 export default function Routes() {
     return (
         <BrowserRouter>
@@ -34,6 +38,10 @@ export default function Routes() {
                 <Route path="/local-create" component={Localcreate}/>
                 <Route path="/local-list" component={Locallist}/>
                 <Route path="/local-edit/:id" component={Localedit}/>
+
+                <Route path="/collaborator-create" component={Collaboratorcreate}/>
+                {/* <Route path="/category-edit/:id" component={Categoryedit}/>
+                <Route path="/category-list/" component={Categorylist}/> */}
             </Switch>
         </BrowserRouter>
     );

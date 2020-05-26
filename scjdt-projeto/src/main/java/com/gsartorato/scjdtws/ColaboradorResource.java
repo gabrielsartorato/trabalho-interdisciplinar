@@ -44,7 +44,6 @@ public class ColaboradorResource {
 	public Response addCategoria(Colaborador col) throws Exception {
 		String msg = "";
 		
-		
 		try {
 			colDao.inserirColaborador(col);
 			
@@ -54,7 +53,7 @@ public class ColaboradorResource {
 			
 		}catch (RegraNegocioException e) {
 			logger.error("Erro ao tentar inserir: " + e.getMessage());
-			e.printStackTrace();
+			
 			msg = e.getMessage();
 			return Response.status(401).entity(msg).build();
 		}

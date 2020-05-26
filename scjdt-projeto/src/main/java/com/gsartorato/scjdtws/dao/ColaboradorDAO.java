@@ -126,7 +126,7 @@ public class ColaboradorDAO {
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, col.getRg());
-		stmt.setString(2, col.getCep());
+		stmt.setString(2, col.getCpf());
 		
 		ResultSet rs = stmt.executeQuery();
 		

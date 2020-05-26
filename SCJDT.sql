@@ -66,3 +66,9 @@ FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
 
+-- auto updated_at localTrabalho
+CREATE TRIGGER set_timestamp_localTrabalho 
+BEFORE UPDATE ON colaborador
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
+
