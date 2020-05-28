@@ -52,6 +52,13 @@ export default function Dashboard() {
                         <Link className="button button-color" to="/category-list">Consultar</Link>
                     </div>
                 </div>
+                <div className="itens">
+                    <h2>Colaborador</h2>
+                    <div className="button-group">
+                        <Link className="button" to="/collaborator-create">Inserir</Link>
+                        <Link className="button button-color" to="/dashboard">Consultar</Link>
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -60,6 +60,23 @@ public class ColaboradorResource {
 		
 	}
 	
+	@GET
+	@Path("/buscar/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarColaborador(@PathParam("id") int idColaborador) throws SQLException, Exception {
+		String msg = "";
+		try {			
+			Colaborador colaborador = colDao.buscarColaborador(idColaborador);
+			
+			return Response.status(201).entity(colaborador).build();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			msg = "Erro ao buscaro colaborador!";
+			return Response.status(401).entity(msg).build();
+		}
+	}
+	
 	@PUT
 	@Path("/edit/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -69,6 +86,8 @@ public class ColaboradorResource {
 		
 		try {
 			colDao.editColaborador(col, idColaborador);
+			
+			msg = "Colaborador Editado com sucesso!";
 			
 			return Response.status(201).entity(msg).build();
 		}

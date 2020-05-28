@@ -71,6 +71,44 @@ public class ColaboradorDAO {
 		
 	}
 	
+	public Colaborador buscarColaborador(int idColaborador) throws Exception, SQLException {
+		
+		Connection conn = DBConfig.getConnection();
+		
+		Colaborador colaborador = null;
+		
+		String sql = "SELECT * FROM colaborador WHERE \"idColaborador\" = ?";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, idColaborador);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		if(rs.next()) {
+			colaborador = new Colaborador();
+			
+			colaborador.setIdColaborador(rs.getInt("idColaborador"));
+			colaborador.setNomeColaborador(rs.getString("nomeColaborador"));
+			colaborador.setDataNascimento(rs.getTimestamp("dataNascimento").toString());
+			colaborador.setRg(rs.getString("rg"));
+			colaborador.setCpf(rs.getString("cpf"));
+			colaborador.setEmail(rs.getString("email"));
+			colaborador.setCargaHoraria(rs.getTime("cargaHoraria").toString());
+			colaborador.setTipoMoradia(rs.getString("tipoMoradia"));
+			colaborador.setCep(rs.getString("cep"));
+			colaborador.setRua(rs.getString("rua"));
+			colaborador.setNumero(rs.getString("numero"));
+			colaborador.setComplemento(rs.getString("complemento"));
+			colaborador.setBairro(rs.getString("bairro"));
+			colaborador.setCidade(rs.getString("cidade"));
+			colaborador.setEstado(rs.getString("estado"));
+			colaborador.setId_funcao(rs.getInt("id_funcao"));
+			colaborador.setAtivo(rs.getInt("ativo"));
+		}
+		
+		return colaborador;
+	}
+	
 	public void editColaborador(Colaborador col, int idColaborador) throws Exception, SQLException {
 		
 		Connection conn = DBConfig.getConnection();
