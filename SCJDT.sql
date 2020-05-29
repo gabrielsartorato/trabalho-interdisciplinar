@@ -28,6 +28,21 @@ CREATE TABLE "local_trabalho" (
 "updated_at" timestamp
 );
 
+CREATE TABLE "programacao_horaria" (
+  "id_programacao" SERIAL PRIMARY KEY,
+  "nome_programacao" text NOT NULL,
+  "inicio_horario" time NOT NULL,
+  "fim_horario" time NOT NULL,
+  "descricao" text NOT NULL,
+  "id_local_inicio" int NOT NULL,
+  "status_programacao" int NOT NULL,
+  "created_at" timestamp NOT NULL,
+  "updated_at" timestamp
+);
+
+ALTER TABLE "programacao_horaria" ADD FOREIGN KEY ("id_local_inicio") REFERENCES "local_trabalho" ("id_local_trabalho");
+
+
 CREATE TABLE "usuario" (
 "id_usuario" SERIAL PRIMARY KEY,
 "nome_usuario" text NOT NULL UNIQUE,
@@ -60,6 +75,8 @@ CREATE TABLE "colaborador" (
 
 ALTER TABLE "colaborador" ADD FOREIGN KEY ("id_funcao") REFERENCES "funcao" ("id_funcao");
 
+
+
 -- create procedure
 CREATE FUNCTION trigger_set_timestamp()
 RETURNS TRIGGER AS $$
@@ -90,6 +107,12 @@ EXECUTE PROCEDURE trigger_set_timestamp();
 -- auto updated_at categoria_funcao
 CREATE TRIGGER set_timestamp_localTrabalho 
 BEFORE UPDATE ON categoria_funcao
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
+
+-- auto updated_at categoria_funcao
+CREATE TRIGGER set_timestamp_localTrabalho 
+BEFORE UPDATE ON programacao_horaria
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
