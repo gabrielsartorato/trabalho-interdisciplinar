@@ -28,13 +28,13 @@ public class LocalTrabalhoDAO {
 		
 		Connection conn  =  DBConfig.getConnection();
 		
-		if(findByName(localT.getNomeLocalTrabalho()) == null) {
+		if(findByName(localT.getNome_local_trabalho()) == null) {
 			try {
 				
-				String sql = "INSERT INTO localtrabalho (\"nomeLocalTrabalho\", created_at) VALUES (?, ?)";
+				String sql = "INSERT INTO local_trabalho (nome_local_trabalho, created_at) VALUES (?, ?)";
 				
 				PreparedStatement stmt = conn.prepareStatement(sql);
-				stmt.setString(1, localT.getNomeLocalTrabalho());
+				stmt.setString(1, localT.getNome_local_trabalho());
 				stmt.setTimestamp(2, ts);
 				stmt.execute();
 				stmt.close();
@@ -52,10 +52,10 @@ public class LocalTrabalhoDAO {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "UPDATE \"localtrabalho\" SET \"nomeLocalTrabalho\" = ? where \"idLocalTrabalho\" = ?";
+		String sql = "UPDATE local_trabalho SET nome_local_trabalho = ? WHERE id_local_trabalho = ?";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setString(1, localT.getNomeLocalTrabalho());
+		stmt.setString(1, localT.getNome_local_trabalho());
 		stmt.setInt(2, idLocal);
 		
 		stmt.execute();
@@ -67,7 +67,7 @@ public class LocalTrabalhoDAO {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "DELETE FROM \"localtrabalho\" WHERE \"idLocalTrabalho\" = ?";
+		String sql = "DELETE FROM local_trabalho WHERE id_local_trabalho = ?";
 		
 		try {
 			
@@ -87,7 +87,7 @@ public class LocalTrabalhoDAO {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "Select * from \"localtrabalho\" where \"idLocalTrabalho\" = ?";
+		String sql = "Select * from local_trabalho where id_local_trabalho = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, idLocal);
 		
@@ -96,8 +96,8 @@ public class LocalTrabalhoDAO {
 		if(rs.next()) {
 			localT = new LocalTrabalho();
 			
-			localT.setIdLocalTrabalho(rs.getInt("idLocalTrabalho"));
-			localT.setNomeLocalTrabalho(rs.getString("nomeLocalTrabalho"));
+			localT.setId_local_trabalho(rs.getInt("id_local_trabalho"));
+			localT.setNome_local_trabalho(rs.getString("nome_local_trabalho"));
 		}
 		
 		return localT;
@@ -109,7 +109,7 @@ public class LocalTrabalhoDAO {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "SELECT * FROM \"localtrabalho\"";
+		String sql = "SELECT * FROM local_trabalho";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		
@@ -118,8 +118,8 @@ public class LocalTrabalhoDAO {
 		while(rs.next()) {
 			LocalTrabalho localT = new LocalTrabalho();
 			
-			localT.setIdLocalTrabalho(rs.getInt("idLocalTrabalho"));
-			localT.setNomeLocalTrabalho(rs.getString("nomeLocalTrabalho"));
+			localT.setId_local_trabalho(rs.getInt("id_local_trabalho"));
+			localT.setNome_local_trabalho(rs.getString("nome_local_trabalho"));
 			
 			listarLocal.add(localT);
 		}
@@ -133,7 +133,7 @@ public class LocalTrabalhoDAO {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "Select * from localTrabalho where \"nomeLocalTrabalho\" = ?";
+		String sql = "Select * from local_trabalho where nome_local_trabalho = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, name);
 		
@@ -142,7 +142,7 @@ public class LocalTrabalhoDAO {
 		if(rs.next()) {
 			localT = new LocalTrabalho();
 			
-			localT.setNomeLocalTrabalho(rs.getString("nomeLocalTrabalho"));
+			localT.setNome_local_trabalho(rs.getString("nome_local_trabalho"));
 		}
 		
 		return localT;

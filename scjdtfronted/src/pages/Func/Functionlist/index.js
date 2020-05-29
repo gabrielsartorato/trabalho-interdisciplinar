@@ -2,19 +2,18 @@ import React, { useEffect, useState } from 'react'
 
 import { useHistory } from 'react-router-dom'
 
-import './style.css'
-
-import { FiPower, FiEdit, FiHome } from 'react-icons/fi'
+import { FiPower, FiTrash, FiEdit, FiHome } from 'react-icons/fi'
 import timerSvg from '../../../assets/clock.svg'
 import { adjustName } from '../../../libs/utils'
 
 import api from '../../../services/api'
 
+import './style.css'
 
 export default function Categorylist() {
     const userName = localStorage.getItem('nomeUsuario')
     const history = useHistory()
-    const [collaboratorList, setCollaboratorList] = useState([]);
+    const [functionList, setFunctionList] = useState([]);
 
     const user = adjustName(userName)
 
@@ -28,10 +27,30 @@ export default function Categorylist() {
     }
 
     useEffect(() => {
-        api.get('colaborador/list').then(response => {
-            setCollaboratorList(response.data)
+        api.get('funcao/list').then(response => {
+            setFunctionList(response.data)
         })
     }, [])
+
+    function handleConfirm (func) {
+        const confirmation = window.confirm(`Deseja realmente deletar o usuário ${func.nome_funcao}`)
+
+        if(confirmation)
+            handleDeleteCategory(func.id_funcao)
+
+        window.event.preventDefault()
+    }
+
+
+    async function handleDeleteCategory(id) {
+        try {
+            await api.delete(`funcao/delete/${id}`)
+            setFunctionList(functionList.filter(func => func.id_funcao !== id))
+        }
+        catch (err) {
+            alert('Erro ao deletar a categoria, tente novamente!')
+        }
+    }
 
     return (
         <div className="dashboard-container">
@@ -51,23 +70,16 @@ export default function Categorylist() {
                     <thead>
                         <tr>
                             <th>Funções</th>
-                            <th>Ativo</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {collaboratorList.map(collaborator => (
-                            <tr key={collaborator.id_colaborador} className="tbody">
-                                <td>{collaborator.nome_colaborador}</td>
-                                {collaborator.ativo === 1 ? 
-                                (<td>Ativo</td>)
-                                : collaborator.ativo ===0 ?
-                                (<td>Inativo</td>)
-                                :
-                                (<td>Afastado</td>)
-                                }
+                        {functionList.map(func => (
+                            <tr key={func.id_funcao} className="tbody">
+                                <td>{func.nome_funcao}</td>
                                 <td className="action">
-                                    <a id="ref" href={`/collaborator-edit/${collaborator.id_colaborador}`}><FiEdit className="image"/></a>
+                                    <a href={`/function-edit/${func.id_funcao}`}><FiEdit /></a>
+                                    <button onClick={() => handleConfirm(func)}><FiTrash /></button>
                                 </td>
                             </tr>
                         ))}

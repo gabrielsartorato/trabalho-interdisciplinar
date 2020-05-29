@@ -1,7 +1,7 @@
-.register-collaborator {
+.register-container {
     width: 100%;
     max-width: 1120px;
-    height: 100%;
+    height: 100vh;
     margin: 0 auto;
 
     display: flex;
@@ -9,7 +9,7 @@
     justify-content: center;
 }
 
-.register-collaborator .collaborator-instruction {
+.register-container .content {
     width: 100%;
     padding: 96px;
     background: #f0f0f5;
@@ -23,32 +23,32 @@
 
 }
 
-.register-collaborator .collaborator-instruction section {
+.register-container .content section {
     width: 100%;
     max-width: 380px;
 }
 
-.register-collaborator .collaborator-instruction section h1 {
+.register-container .content section h1 {
     margin: 8px 0 32px;
     font-size: 32px;
 }
 
-.register-collaborator .collaborator-instruction section p {
+.register-container .content section p {
     font-size: 18px;
     color: #737380;
     line-height: 32px;
 }
 
-.register-collaborator .collaborator-instruction form {
+.register-container .content form {
     width: 100%;
     max-width: 450px;
 }
 
-.register-collaborator .collaborator-instruction input {
+.register-container .content input {
     margin-top: 8px;
 }
 
-.register-collaborator form textarea {
+.register-container form textarea {
     resize: vertical;
     margin-top: 8px;
     padding: 8px 24px;

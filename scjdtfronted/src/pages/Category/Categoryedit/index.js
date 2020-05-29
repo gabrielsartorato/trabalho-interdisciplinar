@@ -14,14 +14,10 @@ export default function UserCreate(props) {
     const history = useHistory()
 
     const [name, setName ] = useState('')
-    const [salary, setSalary ] = useState('')
-    const [description, setDescription ] = useState('')
 
     useEffect(() => {
         api.get(`categoria/buscar/${functionUser}`).then(response => {
-            setName(response.data.nomeCategoria)
-            setSalary(response.data.salarioCategoria)
-            setDescription(response.data.descricaoCategoria)
+            setName(response.data.nome_categoria)
         })
     }, [])
 
@@ -29,9 +25,7 @@ export default function UserCreate(props) {
         e.preventDefault();
 
         const data = {
-            nomeCategoria: name,
-            salarioCategoria: salary,
-            descricaoCategoria: description
+            nome_categoria: name,   
         }
 
         try {
@@ -61,16 +55,6 @@ export default function UserCreate(props) {
                         placeholder="Nome da função"
                         value={name}
                         onChange={e => setName(e.target.value)}
-                    />
-                    <input 
-                        placeholder="Salário"
-                        value={salary}
-                        onChange={e => setSalary(e.target.value)}
-                    />
-                    <textarea
-                        placeholder="Descrição" 
-                        value={description}
-                        onChange={e => setDescription(e.target.value)}
                     />
                     <button className="button">Editar</button>
                 </form>

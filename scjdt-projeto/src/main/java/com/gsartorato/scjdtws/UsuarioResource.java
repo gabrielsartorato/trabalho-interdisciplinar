@@ -39,7 +39,7 @@ public class UsuarioResource {
 			
 			usuarioDAO.inserirUsuario(usuario);
 			
-			msg = "Usuario criado com sucesso: " + usuario.getNomeUsuario();
+			msg = "Usuario criado com sucesso: " + usuario.getNome_usuario();
 			
 			return Response.status(Response.Status.CREATED).entity(msg).build();
 		}catch (RegraNegocioException e) {
@@ -105,8 +105,8 @@ public class UsuarioResource {
 			usuarioDAO.autenticarUsuario(usuario);
 			Usuario usuario2 = new Usuario();
 			
-			usuario2.setIdUsuario(usuario.getIdUsuario());
-			usuario2.setNomeUsuario(usuario.getNomeUsuario());
+			usuario2.setId_usuario(usuario.getId_usuario());
+			usuario2.setNome_usuario(usuario.getNome_usuario());
 			
 			return Response.ok(usuario2).build();
 			

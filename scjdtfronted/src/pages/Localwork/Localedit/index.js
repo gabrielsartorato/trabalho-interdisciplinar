@@ -17,7 +17,7 @@ export default function UserCreate(props) {
 
     useEffect(() => {
         api.get(`localtrabalho/buscar/${localwork}`).then(response => {
-            setName(response.data.nomeLocalTrabalho)
+            setName(response.data.nome_local_trabalho)
         })
     }, [])
 
@@ -25,7 +25,7 @@ export default function UserCreate(props) {
         e.preventDefault();
 
         const data = {
-            nomeLocalTrabalho: name,
+            nome_local_trabalho: name,
         }
 
         try {

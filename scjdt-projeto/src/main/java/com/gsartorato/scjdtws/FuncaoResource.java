@@ -14,92 +14,89 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.gsartorato.scjdtws.dao.FuncaoDAO;
+import com.gsartorato.scjdtws.entidade.Funcao;
 
-import com.gsartorato.scjdtws.dao.LocalTrabalhoDAO;
-import com.gsartorato.scjdtws.entidade.LocalTrabalho;
-import com.gsartorato.scjdtws.exception.RegraNegocioException;
-
-@Path("localtrabalho")
-public class LocalTrabalhoResource {
-
-	private LocalTrabalhoDAO localDAO;
+@Path("/funcao")
+public class FuncaoResource {
+	
+	private FuncaoDAO fncDAO;
 	
 	@PostConstruct
 	private void init() {
-		localDAO = new LocalTrabalhoDAO();
+		fncDAO = new FuncaoDAO();
 	}
 	
 	@POST
 	@Path("/add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response addLocal(LocalTrabalho localT) throws Exception {
+	public Response addCategoria(Funcao fnc) {
 		String msg = "";
 		
 		try {
+			fncDAO.inserirFuncao(fnc);
 			
-			localDAO.inserirLocal(localT);
-			
-			msg = "Local de trabalho inseiro com sucesso: " + localT.getNome_local_trabalho();
+			msg = "Função inserida com sucesso: " + fnc.getNome_funcao();
 			
 			return Response.status(Response.Status.CREATED).entity(msg).build();
-		}catch (RegraNegocioException e) {
 			
-			msg = e.getMessage();
-			System.out.println(msg);
-			
+		}catch (Exception e) {
+			e.printStackTrace();
+			msg = "Não foi possivel adicinar a função";
 			return Response.status(401).entity(msg).build();
 		}
+		
 	}
+	
 	
 	@PUT
 	@Path("/edit/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response editLocal(LocalTrabalho localT, @PathParam("id") int idLocal) {
+	public Response editarCategoria(Funcao fnc, @PathParam("id") int id_funcao) {
 		String msg = "";
 		
 		try {
 			
-			localDAO.editarLocal(localT, idLocal);
+			fncDAO.editarFuncao(fnc, id_funcao);
 			
-			msg = "Local de Trabalho alterado com sucesso";
+			msg = "Função editada com sucesso";
 			
 			return Response.status(201).entity(msg).build();
 			
 		}catch (Exception e) {
-			
 			e.printStackTrace();
 			
-			msg = "Não foi possivel alterar o local de trabalho";
+			msg = "Não foi possivel alterar a função, tente novamente!";
 			
 			return Response.status(401).entity(msg).build();
-			
 		}
+		
 	}
 	
 	@DELETE
 	@Path("/delete/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response excluirLocal(@PathParam("id") int idLocal) {
+	public Response deleteCategoria(@PathParam("id") int id_funcao) {
 		String msg = "";
 		
 		try {
 			
-			localDAO.excluirLocal(idLocal);
+			fncDAO.excluirFuncao(id_funcao);
 			
-			msg = "Local exclíudo com sucesso";
+			msg = "Função deleta com sucesso!";
 			
 			return Response.status(201).entity(msg).build();
 			
 		}catch (Exception e) {
-			
 			e.printStackTrace();
 			
-			msg = "Não foi possivel excluir o local de Trabalho";
+			msg = "Não foi possivel excluir a categoria";
 			
 			return Response.status(401).entity(msg).build();
+			
 		}
 		
 	}
@@ -107,20 +104,16 @@ public class LocalTrabalhoResource {
 	@GET
 	@Path("/list")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response listLocalTrabalho(){
-		List<LocalTrabalho> listarLocal = null;
+	public List<Funcao> listaCategoria(){
+		List<Funcao> listarFuncao = null;
 		
 		try {
-			
-			listarLocal = localDAO.listarLocal();
-			
-			return Response.status(201).entity(listarLocal).build();
-			
+			listarFuncao = fncDAO.listarFuncao();
 		}catch (Exception e) {
 			e.printStackTrace();
-			String msg = "Não foi possivel exibir a lista";
-			return Response.status(401).entity(msg).build();
 		}
+		
+		return listarFuncao;
 		
 	}
 	
@@ -128,21 +121,21 @@ public class LocalTrabalhoResource {
 	@Path("/buscar/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findById(@PathParam("id") int idLocalTrabalho) {
+	public Response findById(@PathParam("id") int id_funcao) {
 		
 		String msg = "";
 		
 		try {
-			LocalTrabalho localtrab = localDAO.findById(idLocalTrabalho);
+			Funcao fnc = fncDAO.findById(id_funcao);
 			
-			return Response.status(201).entity(localtrab).build();
+			return Response.status(201).entity(fnc).build();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			msg = "Não foi possivel buscar a categoria";
+			msg = "Não foi possivel buscar a função";
 			return Response.status(401).entity(msg).build();
 		}
 		
 	}
-	
+
 }

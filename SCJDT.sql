@@ -1,55 +1,71 @@
-CREATE TABLE "categoriaFuncao" (
-  "idCategoria" SERIAL PRIMARY KEY,
-  "nomeCategoria" text NOT NULL UNIQUE,
-  "salarioCategoria" numeric (5,2),
-  "descricaoCategoria" text
+DROP DATABASE scjdt
+
+CREATE DATABASE scjdt
+
+CREATE TABLE "categoria_funcao" (
+"id_categoria" SERIAL PRIMARY KEY,
+"nome_categoria" text NOT NULL,
+"created_at" timestamp NOT NULL,
+"updated_at" timestamp
 );
 
-CREATE TABLE "localTrabalho" (
-  "idLocalTrabalho" SERIAL PRIMARY KEY,
-  "nomeLocalTrabalho" text NOT NULL UNIQUE,
-  "created_at" timestamp NOT NULL,
-  "updated_at" timestamp
+CREATE TABLE "funcao" (
+"id_funcao" SERIAL PRIMARY KEY,
+"nome_funcao" text NOT NULL,
+"salario_funcao" numeric (8,2),
+"descricao_funcao" text,
+"id_categoria" int NOT NULL,
+"created_at" timestamp NOT NULL,
+"updated_at" timestamp
+);
+
+ALTER TABLE "funcao" ADD FOREIGN KEY ("id_categoria") REFERENCES "categoria_funcao" ("id_categoria");
+
+CREATE TABLE "local_trabalho" (
+"id_local_trabalho" SERIAL PRIMARY KEY,
+"nome_local_trabalho" text NOT NULL UNIQUE,
+"created_at" timestamp NOT NULL,
+"updated_at" timestamp
 );
 
 CREATE TABLE "usuario" (
-  "idUsuario" SERIAL PRIMARY KEY,
-  "nomeUsuario" text NOT NULL UNIQUE,
-  "senha" text NOT NULL,
-  "created_at" timestamp NOT NULL,
-  "updated_at" timestamp
+"id_usuario" SERIAL PRIMARY KEY,
+"nome_usuario" text NOT NULL UNIQUE,
+"senha" text NOT NULL,
+"created_at" timestamp NOT NULL,
+"updated_at" timestamp
 );
 
 CREATE TABLE "colaborador" (
-  "idColaborador" SERIAL PRIMARY KEY,
-  "nomeColaborador" text NOT NULL,
-  "dataNascimento" timestamp NOT NULL,
-  "rg" text NOT NULL,
-  "cpf" text NOT NULL,
-  "email" text,
-  "cargaHoraria" time,
-  "tipoMoradia" text,
-  "cep" text,
-  "rua" text,
-  "numero" text,
-  "complemento" text,
-  "bairro" text,
-  "cidade" text,
-  "estado" text,
-  "id_funcao" int,
-  "ativo" int,
-  "created_at" timestamp,
-  "updated_at" timestamp
+"id_colaborador" SERIAL PRIMARY KEY,
+"nome_colaborador" text NOT NULL,
+"data_nascimento" timestamp NOT NULL,
+"rg" text NOT NULL,
+"cpf" text NOT NULL,
+"email" text,
+"carga_horaria" time,
+"tipo_moradia" text,
+"cep" text,
+"rua" text,
+"numero" text,
+"complemento" text,
+"bairro" text,
+"cidade" text,
+"estado" text,
+"id_funcao" int,
+"ativo" int,
+"created_at" timestamp,
+"updated_at" timestamp
 );
 
-ALTER TABLE "colaborador" ADD FOREIGN KEY ("id_funcao") REFERENCES "categoriaFuncao" ("idCategoria");
+ALTER TABLE "colaborador" ADD FOREIGN KEY ("id_funcao") REFERENCES "funcao" ("id_funcao");
 
 -- create procedure
 CREATE FUNCTION trigger_set_timestamp()
 RETURNS TRIGGER AS $$
 BEGIN
-  NEW.updated_at = NOW();
-  RETURN NEW;
+NEW.updated_at = NOW();
+RETURN NEW;
 END;
 $$ LANGUAGE plpgsql
 
@@ -61,14 +77,19 @@ EXECUTE PROCEDURE trigger_set_timestamp();
 
 -- auto updated_at localTrabalho
 CREATE TRIGGER set_timestamp_localTrabalho 
-BEFORE UPDATE ON localtrabalho
+BEFORE UPDATE ON local_trabalho
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
-
--- auto updated_at localTrabalho
+-- auto updated_at colaborador
 CREATE TRIGGER set_timestamp_localTrabalho 
 BEFORE UPDATE ON colaborador
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
+
+-- auto updated_at categoria_funcao
+CREATE TRIGGER set_timestamp_localTrabalho 
+BEFORE UPDATE ON categoria_funcao
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 

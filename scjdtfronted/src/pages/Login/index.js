@@ -17,14 +17,14 @@ export default function Login() {
         e.preventDefault()
 
         const data = {
-            nomeUsuario: user.toUpperCase(),
+            nome_usuario: user.toUpperCase(),
 	        senha: password
         }
         try {
             const response = await api.post('usuario/autenticar', data)
 
-            localStorage.setItem('userId', response.data.idUsuario)
-            localStorage.setItem('nomeUsuario', response.data.nomeUsuario)
+            localStorage.setItem('userId', response.data.id_usuario)
+            localStorage.setItem('nomeUsuario', response.data.nome_usuario)
 
             history.push('/dashboard')
         }

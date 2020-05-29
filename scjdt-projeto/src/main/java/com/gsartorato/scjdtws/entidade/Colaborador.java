@@ -3,11 +3,11 @@ package com.gsartorato.scjdtws.entidade;
 
 public class Colaborador {
 	
-	private int idColaborador;
+	private int id_colaborador;
 	
-	private String nomeColaborador;
+	private String nome_colaborador;
 	
-	private String dataNascimento;
+	private String data_nascimento;
 	
 	private String rg;
 	
@@ -15,9 +15,9 @@ public class Colaborador {
 	
 	private String email;
 	
-	private String cargaHoraria;
+	private String carga_horaria;
 	
-	private String tipoMoradia;
+	private String tipo_moradia;
 	
 	private String cep;
 	
@@ -37,28 +37,28 @@ public class Colaborador {
 	
 	private int ativo;
 
-	public int getIdColaborador() {
-		return idColaborador;
+	public int getId_colaborador() {
+		return id_colaborador;
 	}
 
-	public void setIdColaborador(int idColaborador) {
-		this.idColaborador = idColaborador;
+	public void setId_colaborador(int id_colaborador) {
+		this.id_colaborador = id_colaborador;
 	}
 
-	public String getNomeColaborador() {
-		return nomeColaborador;
+	public String getNome_colaborador() {
+		return nome_colaborador;
 	}
 
-	public void setNomeColaborador(String nomeColaborador) {
-		this.nomeColaborador = nomeColaborador;
+	public void setNome_colaborador(String nome_colaborador) {
+		this.nome_colaborador = nome_colaborador;
 	}
 
-	public String getDataNascimento() {
-		return dataNascimento;
+	public String getData_nascimento() {
+		return data_nascimento;
 	}
 
-	public void setDataNascimento(String dataNascimento) {
-		this.dataNascimento = dataNascimento;
+	public void setData_nascimento(String data_nascimento) {
+		this.data_nascimento = data_nascimento;
 	}
 
 	public String getRg() {
@@ -85,20 +85,20 @@ public class Colaborador {
 		this.email = email;
 	}
 
-	public String getCargaHoraria() {
-		return cargaHoraria;
+	public String getCarga_horaria() {
+		return carga_horaria;
 	}
 
-	public void setCargaHoraria(String cargaHoraria) {
-		this.cargaHoraria = cargaHoraria;
+	public void setCarga_horaria(String carga_horaria) {
+		this.carga_horaria = carga_horaria;
 	}
 
-	public String getTipoMoradia() {
-		return tipoMoradia;
+	public String getTipo_moradia() {
+		return tipo_moradia;
 	}
 
-	public void setTipoMoradia(String tipoMoradia) {
-		this.tipoMoradia = tipoMoradia;
+	public void setTipo_moradia(String tipo_moradia) {
+		this.tipo_moradia = tipo_moradia;
 	}
 
 	public String getCep() {

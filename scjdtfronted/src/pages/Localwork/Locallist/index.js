@@ -26,11 +26,11 @@ export default function Userlist() {
         history.push('/dashboard')
     }
 
-    function handleConfirm (user) {
-        const confirmation = window.confirm(`Deseja realmente deletar o usuário ${user.nomeUsuario}`)
+    function handleConfirm (local) {
+        const confirmation = window.confirm(`Deseja realmente deletar o usuário ${local.nome_local_trabalho}`)
 
         if(confirmation)
-            handleDeleteUser(user.idUsuario)
+            handleDeleteUser(local.id_local_trabalho)
 
         window.event.preventDefault()
     }
@@ -38,14 +38,13 @@ export default function Userlist() {
     useEffect(() => {
         api.get('localtrabalho/list').then(response => {
             setLocalList(response.data)
-            console.log(response.data)
         })
     }, [])
 
     async function handleDeleteUser(id) {
         try {
             await api.delete(`localtrabalho/delete/${id}`)
-            setLocalList(localList.filter(local => local.idLocalTrabalho !== id))
+            setLocalList(localList.filter(local => local.id_local_trabalho !== id))
         }
         catch (err) {
             alert('Erro ao deletar o caso, tete novamente!')
@@ -75,11 +74,11 @@ export default function Userlist() {
                     </thead>
                     <tbody>
                         {localList.map(local => (
-                            <tr key={local.idLocalTrabalho} className="tbody">
-                                <td>{local.nomeLocalTrabalho}</td>
+                            <tr key={local.id_local_trabalho} className="tbody">
+                                <td>{local.nome_local_trabalho}</td>
                                 <td className="action">
-                                    <a href={`/local-edit/${local.idLocalTrabalho}`}><FiEdit /></a>
-                                    <button onClick={() => handleConfirm(user)}><FiTrash /></button>
+                                    <a href={`/local-edit/${local.id_local_trabalho}`}><FiEdit /></a>
+                                    <button onClick={() => handleConfirm(local)}><FiTrash /></button>
                                 </td>
                             </tr>
                         ))}

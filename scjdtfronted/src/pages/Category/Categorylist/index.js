@@ -36,7 +36,7 @@ export default function Categorylist() {
         const confirmation = window.confirm(`Deseja realmente deletar o usuário ${category.nomeCategoria}`)
 
         if(confirmation)
-            handleDeleteCategory(category.idCategoria)
+            handleDeleteCategory(category.id_categoria)
 
         window.event.preventDefault()
     }
@@ -45,7 +45,7 @@ export default function Categorylist() {
     async function handleDeleteCategory(id) {
         try {
             await api.delete(`categoria/delete/${id}`)
-            setCategoryList(categoryList.filter(category => category.idCategoria !== id))
+            setCategoryList(categoryList.filter(category => category.id_categoria !== id))
         }
         catch (err) {
             alert('Erro ao deletar a categoria, tente novamente!')
@@ -75,10 +75,10 @@ export default function Categorylist() {
                     </thead>
                     <tbody>
                         {categoryList.map(category => (
-                            <tr key={category.idCategoria} className="tbody">
-                                <td>{category.nomeCategoria}</td>
+                            <tr key={category.id_categoria} className="tbody">
+                                <td>{category.nome_categoria}</td>
                                 <td className="action">
-                                    <a href={`/category-edit/${category.idCategoria}`}><FiEdit /></a>
+                                    <a href={`/category-edit/${category.id_categoria}`}><FiEdit /></a>
                                     <button onClick={() => handleConfirm(category)}><FiTrash /></button>
                                 </td>
                             </tr>

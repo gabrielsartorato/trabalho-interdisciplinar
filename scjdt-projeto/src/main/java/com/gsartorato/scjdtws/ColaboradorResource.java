@@ -1,13 +1,10 @@
 package com.gsartorato.scjdtws;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -17,9 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.gsartorato.scjdtws.dao.CategoriaFuncaoDAO;
 import com.gsartorato.scjdtws.dao.ColaboradorDAO;
-import com.gsartorato.scjdtws.entidade.CategoriaFuncao;
 import com.gsartorato.scjdtws.entidade.Colaborador;
 import com.gsartorato.scjdtws.exception.RegraNegocioException;
 
@@ -47,7 +42,7 @@ public class ColaboradorResource {
 		try {
 			colDao.inserirColaborador(col);
 			
-			msg = "Colaborador criado com sucesso: " + col.getNomeColaborador();
+			msg = "Colaborador criado com sucesso: " + col.getNome_colaborador();
 			
 			return Response.status(Response.Status.CREATED).entity(msg).build();
 			
@@ -96,6 +91,26 @@ public class ColaboradorResource {
 			msg = "Não foi possivel alterar o colaborador!";
 			return Response.status(401).entity(msg).build();
 		}
+	}
+	
+	@GET
+	@Path("/list")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listColaborador(){
+		List<Colaborador> listarColaborador = null;
+		
+		try {
+			
+			listarColaborador = colDao.listColaborador();
+			
+			return Response.status(201).entity(listarColaborador).build();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			String msg = "Não foi possivel exibir a lista";
+			return Response.status(401).entity(msg).build();
+		}
+		
 	}
 
 

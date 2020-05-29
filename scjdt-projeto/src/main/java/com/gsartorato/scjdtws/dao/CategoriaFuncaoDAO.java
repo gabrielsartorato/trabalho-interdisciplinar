@@ -3,82 +3,113 @@ package com.gsartorato.scjdtws.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import com.gsartorato.scjdtws.config.ConfigSingleton;
 import com.gsartorato.scjdtws.config.DBConfig;
 import com.gsartorato.scjdtws.entidade.CategoriaFuncao;
+import com.gsartorato.scjdtws.exception.RegraNegocioException;
 
 public class CategoriaFuncaoDAO {
 	
 	DBConfig conn = new DBConfig();
 	
-	CategoriaFuncao catfunc = null;
+	CategoriaFuncaoDAO localDAO = null;
 	
-	ConfigSingleton conSing = ConfigSingleton.getInstancy();
-	Connection conexao = conSing.getConexao();
+	public void inserirCategoria(CategoriaFuncao cateFnc) throws Exception {
+		
+		Date date = new Date();
+		
+		long time = date.getTime();
+		
+		Timestamp ts = new Timestamp(time);
+		
+		Connection conn  =  DBConfig.getConnection();
+		
+		if(findByName(cateFnc.getNome_categoria()) == null) {
+			try {
+				
+				String sql = "INSERT INTO categoria_funcao (nome_categoria, created_at) VALUES (?, ?)";
+				
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setString(1, cateFnc.getNome_categoria());
+				stmt.setTimestamp(2, ts);
+				stmt.execute();
+				stmt.close();
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			throw new RegraNegocioException("Nome para categoria já existente!");
+		}
+	}
 	
-	public void inserirCategoria(CategoriaFuncao catFnc) throws Exception, SQLException {
+	public void editarCategoria(CategoriaFuncao catFnc, int id_funcao) throws Exception {
 		
-		Connection conexao = conSing.getConexao();
+		Connection conn = DBConfig.getConnection();
 		
-		String sql = "INSERT INTO \"categoriaFuncao\" (\"nomeCategoria\", \"salarioCategoria\", \"descricaoCategoria\")"
-				+ "VALUES (?, ?, ?)";
+		String sql = "UPDATE categoria_funcao SET nome_categoria = ? where id_categoria = ?";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, catFnc.getNome_categoria());
+		stmt.setInt(2, id_funcao);
+		
+		stmt.execute();
+		stmt.close();
+		
+	}
+	
+	public void excluirCategoria(int id_categoria) throws Exception {
+		
+		Connection conn = DBConfig.getConnection();
+		
+		String sql = "DELETE FROM categoria_funcao WHERE id_categoria = ?";
+		
 		try {
 			
-			
-			PreparedStatement stmt = conexao.prepareStatement(sql);
-			stmt.setString(1, catFnc.getNomeCategoria());
-			stmt.setBigDecimal(2, catFnc.getSalarioCategoria());
-			stmt.setString(3, catFnc.getDescricaoCategoria());
-			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id_categoria);
 			stmt.execute();
+			stmt.close();
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
-	public void editarCategoria(CategoriaFuncao catFnc, int idCat) throws Exception, SQLException {
+	public CategoriaFuncao findById(int id_categoria) throws Exception {
+		
+		CategoriaFuncao catFnc = null;
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "UPDATE \"categoriaFuncao\" SET "
-				+ "\"nomeCategoria\" = ?, "
-				+ "\"salarioCategoria\" = ?, "
-				+ "\"descricaoCategoria\" = ?" 
-				+ "WHERE \"idCategoria\" = ?";
-		
+		String sql = "Select * FROM categoria_funcao where id_categoria = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setString(1, catFnc.getNomeCategoria());
-		stmt.setBigDecimal(2, catFnc.getSalarioCategoria());
-		stmt.setString(3, catFnc.getDescricaoCategoria());
-		stmt.setInt(4, idCat);
+		stmt.setInt(1, id_categoria);
 		
-		stmt.execute();
+		ResultSet rs = stmt.executeQuery();
 		
-	}
-	
-	public void excluirCategoria(int idCategoria) throws Exception, SQLException {
+		if(rs.next()) {
+			catFnc = new CategoriaFuncao();
+			
+			catFnc.setId_categoria(rs.getInt("id_categoria"));
+			catFnc.setNome_categoria(rs.getString("nome_categoria"));
+		}
 		
-		Connection conn = DBConfig.getConnection();
-		
-		String sql = "DELETE FROM \"categoriaFuncao\" WHERE \"idCategoria\" = ?";
-		
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, idCategoria);
-		stmt.execute();
+		return catFnc;
 		
 	}
 	
-	public List<CategoriaFuncao> listarCategoria() throws Exception, SQLException{
-		List<CategoriaFuncao> listaCategoria = new ArrayList<CategoriaFuncao>();
+	public List<CategoriaFuncao> listarCategorias() throws Exception{
+		List<CategoriaFuncao> listarCategorias = new ArrayList<CategoriaFuncao>();
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "SELECT * FROM \"categoriaFuncao\"";
+		String sql = "SELECT * FROM categoria_funcao";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		
@@ -87,41 +118,34 @@ public class CategoriaFuncaoDAO {
 		while(rs.next()) {
 			CategoriaFuncao catFnc = new CategoriaFuncao();
 			
-			catFnc.setIdCategoria(rs.getInt("idCategoria"));
-			catFnc.setNomeCategoria(rs.getString("nomeCategoria"));
-			catFnc.setSalarioCategoria(rs.getBigDecimal("salarioCategoria"));
-			catFnc.setDescricaoCategoria(rs.getString("descricaoCategoria"));
+			catFnc.setId_categoria(rs.getInt("id_categoria"));
+			catFnc.setNome_categoria(rs.getString("nome_categoria"));
 			
-			listaCategoria.add(catFnc);
-			
+			listarCategorias.add(catFnc);
 		}
 		
-		return listaCategoria;
+		return listarCategorias;
 	}
-	
-	public CategoriaFuncao findById(int idCategoria) throws Exception, SQLException {
-		Connection conn = DBConfig.getConnection();
+
+	public CategoriaFuncao findByName(String name) throws Exception {
 		
 		CategoriaFuncao catFnc = null;
 		
-		String sql = "SELECT * FROM \"categoriaFuncao\" WHERE \"idCategoria\" = ?";
+		Connection conn = DBConfig.getConnection();
 		
+		String sql = "Select * from categoria_funcao where nome_categoria = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, idCategoria);
+		stmt.setString(1, name);
 		
 		ResultSet rs = stmt.executeQuery();
 		
-		while(rs.next()) {
+		if(rs.next()) {
 			catFnc = new CategoriaFuncao();
 			
-			catFnc.setIdCategoria(rs.getInt("idCategoria"));
-			catFnc.setNomeCategoria(rs.getString("nomeCategoria"));
-			catFnc.setSalarioCategoria(rs.getBigDecimal("salarioCategoria"));
-			catFnc.setDescricaoCategoria(rs.getString("descricaoCategoria"));
-
+			catFnc.setNome_categoria(rs.getString("nome_categoria"));
 		}
 		
 		return catFnc;
+		
 	}
-
 }

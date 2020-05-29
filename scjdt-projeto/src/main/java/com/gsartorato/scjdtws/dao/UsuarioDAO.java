@@ -30,13 +30,13 @@ public class UsuarioDAO {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		if(findByName(usuario.getNomeUsuario()) == null) {
+		if(findByName(usuario.getNome_usuario()) == null) {
 		
-			String sql = "INSERT INTO usuario (\"nomeUsuario\", senha, created_at) VALUES (?, ?, ?)";
+			String sql = "INSERT INTO usuario (nome_usuario, senha, created_at) VALUES (?, ?, ?)";
 			
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			
-			stmt.setString(1, usuario.getNomeUsuario());
+			stmt.setString(1, usuario.getNome_usuario());
 			stmt.setString(2, usuario.getSenha());
 			stmt.setTimestamp(3, ts);
 			stmt.execute();
@@ -53,13 +53,13 @@ public class UsuarioDAO {
 		Connection conn = DBConfig.getConnection();
 		
 		String sql = "UPDATE usuario "
-				+ "SET \"nomeUsuario\" = ?, "
+				+ "SET nome_usuario = ?, "
 				+ "senha = ? "
-				+ "WHERE \"idUsuario\" = ? ";
+				+ "WHERE id_usuario = ? ";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		
-		stmt.setString(1, usuario.getNomeUsuario());
+		stmt.setString(1, usuario.getNome_usuario());
 		stmt.setString(2, usuario.getSenha());
 		stmt.setInt(3, idUsuario);
 		stmt.execute();	
@@ -70,7 +70,7 @@ public class UsuarioDAO {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		String sql = "DELETE FROM usuario WHERE \"idUsuario\" = ?";
+		String sql = "DELETE FROM usuario WHERE id_usuario = ?";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, idUsuario);
@@ -92,8 +92,8 @@ public class UsuarioDAO {
 		while(rs.next()) {
 			Usuario usuario = new Usuario();
 			
-			usuario.setIdUsuario(rs.getInt("idUsuario"));
-			usuario.setNomeUsuario(rs.getString("nomeUsuario"));
+			usuario.setId_usuario(rs.getInt("id_usuario"));
+			usuario.setNome_usuario(rs.getString("nomeUsuario"));
 			usuario.setSenha(rs.getString("senha"));
 			
 			listaUsuario.add(usuario);
@@ -104,16 +104,16 @@ public class UsuarioDAO {
 	
 	public Usuario autenticarUsuario(Usuario usuario) throws Exception {
 		
-		String usuario1 = usuario.getNomeUsuario();
+		String usuario1 = usuario.getNome_usuario();
 		String senha1 = usuario.getSenha();
 		
-		if(usuario.getNomeUsuario().isEmpty() || usuario.getSenha().isEmpty()) {
+		if(usuario.getNome_usuario().isEmpty() || usuario.getSenha().isEmpty()) {
 			throw new RegraNegocioException("Usuario e senha não podem ser vazios");
 		}else {
 		
 			Connection conn = DBConfig.getConnection();
 			
-			String sql = "SELECT * from usuario where \"nomeUsuario\" = ? and senha = ?";
+			String sql = "SELECT * from usuario where nome_usuario = ? and senha = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, usuario1);
 			stmt.setString(2, senha1);
@@ -123,15 +123,15 @@ public class UsuarioDAO {
 			Usuario usuarioAutenticar = new Usuario();
 			
 			if(rs.next()) {
-				usuarioAutenticar.setIdUsuario(rs.getInt("idUsuario"));
-				usuarioAutenticar.setNomeUsuario(rs.getString("nomeUsuario"));
+				usuarioAutenticar.setId_usuario(rs.getInt("id_usuario"));
+				usuarioAutenticar.setNome_usuario(rs.getString("nome_usuario"));
 				usuarioAutenticar.setSenha(rs.getString("senha"));
 				
-				usuario.setIdUsuario(usuarioAutenticar.getIdUsuario());
+				usuario.setId_usuario(usuarioAutenticar.getId_usuario());
 
 			}
 			
-			if(usuarioAutenticar.getNomeUsuario() == null) {
+			if(usuarioAutenticar.getNome_usuario() == null) {
 				throw new RegraNegocioException("Usuario ou senha incorreta!");
 			}
 			if(usuarioAutenticar.getSenha() == null) {
@@ -150,7 +150,7 @@ public class UsuarioDAO {
 		
 		Usuario usuario = null;
 		
-		String sql = "SELECT * FROM usuario WHERE \"idUsuario\" = ?";
+		String sql = "SELECT * FROM usuario WHERE id_usuario = ?";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, idUsuario);
@@ -160,8 +160,8 @@ public class UsuarioDAO {
 		if(rs.next()) {
 			usuario = new Usuario();
 			
-			usuario.setIdUsuario(rs.getInt("idUsuario"));
-			usuario.setNomeUsuario(rs.getString("nomeUsuario"));
+			usuario.setId_usuario(rs.getInt("id_usuario"));
+			usuario.setNome_usuario(rs.getString("nome_usuario"));
 			usuario.setSenha(rs.getString("senha"));
 		}
 		
@@ -175,7 +175,7 @@ public class UsuarioDAO {
 		
 		Usuario usuario = null;
 		
-		String sql = "SELECT * FROM usuario WHERE \"nomeUsuario\" = ?";
+		String sql = "SELECT * FROM usuario WHERE nome_usuario = ?";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, name);
@@ -185,7 +185,7 @@ public class UsuarioDAO {
 		if(rs.next()) {
 			usuario = new Usuario();
 
-			usuario.setNomeUsuario(rs.getString("nomeUsuario"));
+			usuario.setNome_usuario(rs.getString("nome_usuario"));
 		}
 		
 		return usuario;

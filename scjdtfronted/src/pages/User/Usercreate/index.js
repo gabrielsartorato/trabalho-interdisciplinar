@@ -22,7 +22,7 @@ export default function UserCreate() {
         }
         
         const data = {
-            nomeUsuario: name.toUpperCase(),
+            nome_usuario: name.toUpperCase(),
             senha: password
         }   
         

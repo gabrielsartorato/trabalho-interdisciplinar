@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { FiArrowLeft } from 'react-icons/fi'
 import { Link, useHistory } from 'react-router-dom'
+
 import InputMask from 'react-input-mask';
 
 import './style.css'
@@ -29,7 +30,7 @@ export default function collaborator() {
     const [functions, setFunctions] = useState([])
 
     useEffect(() => {
-        api.get('categoria/list').then(response => {
+        api.get('funcao/list').then(response => {
             setFunctions(response.data)
         })
     }, [])
@@ -102,13 +103,13 @@ export default function collaborator() {
         const cepFormated = cep.replace(/\D/g, "")
 
         const data = {
-            nomeColaborador: name,
-            dataNascimento: date,
+            nome_colaborador: name,
+            data_nascimento: date,
             rg: rgFormated,
             cpf: cpfFormated,
             email,
-            cargaHoraria: workload,
-            tipoMoradia: hometype,
+            carga_horaria: workload,
+            tipo_moradia: hometype,
             cep: cepFormated,
             rua: address,
             numero: number,
@@ -281,9 +282,9 @@ export default function collaborator() {
                         <option>Selecione a função</option>
                         {functions.map(func => (
                             <option
-                                key={func.idCategoria}
-                                value={func.idCategoria}
-                            >{func.nomeCategoria}
+                                key={func.id_funcao}
+                                value={func.id_funcao}
+                            >{func.nome_funcao}
                             </option>
                         ))}
                     </select>

@@ -16,10 +16,11 @@ import javax.ws.rs.core.Response;
 
 import com.gsartorato.scjdtws.dao.CategoriaFuncaoDAO;
 import com.gsartorato.scjdtws.entidade.CategoriaFuncao;
+import com.gsartorato.scjdtws.exception.RegraNegocioException;
 
-@Path("/categoria")
+@Path("categoria")
 public class CategoriaFuncaoResource {
-	
+
 	private CategoriaFuncaoDAO catDAO;
 	
 	@PostConstruct
@@ -31,72 +32,75 @@ public class CategoriaFuncaoResource {
 	@Path("/add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response addCategoria(CategoriaFuncao catFnc) {
+	public Response addLocal(CategoriaFuncao catFnc) throws Exception {
 		String msg = "";
 		
+		System.out.println(catFnc.getNome_categoria());
+		
 		try {
+			
 			catDAO.inserirCategoria(catFnc);
 			
-			msg = "Categoria inserida com sucesso: " + catFnc.getNomeCategoria() + " " + catFnc.getSalarioCategoria();
+			msg = "Categoria de função inserida com sucesso: " + catFnc.getNome_categoria();
 			
 			return Response.status(Response.Status.CREATED).entity(msg).build();
+		}catch (RegraNegocioException e) {
 			
-		}catch (Exception e) {
-			e.printStackTrace();
-			msg = "Não foi possivel adicinar a função";
+			msg = e.getMessage();
+			System.out.println(msg);
+			
 			return Response.status(401).entity(msg).build();
 		}
-		
 	}
-	
 	
 	@PUT
 	@Path("/edit/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response editarCategoria(CategoriaFuncao catFnc, @PathParam("id") int idCat) {
+	public Response editLocal(CategoriaFuncao catFnc, @PathParam("id") int id_categoria) {
 		String msg = "";
 		
 		try {
 			
-			catDAO.editarCategoria(catFnc, idCat);
+			catDAO.editarCategoria(catFnc, id_categoria);
 			
-			msg = "Categoria editada com sucesso";
+			msg = "Categoria editada com sucesso!";
 			
 			return Response.status(201).entity(msg).build();
 			
 		}catch (Exception e) {
+			
 			e.printStackTrace();
 			
-			msg = "Não foi possivel alterar a categoria";
+			msg = "Não foi possivel alterar a categoria de função, tente novamente!";
 			
 			return Response.status(401).entity(msg).build();
+			
 		}
-		
 	}
 	
 	@DELETE
 	@Path("/delete/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response deleteCategoria(@PathParam("id") int idCategoria) {
+	public Response excluirLocal(@PathParam("id") int id_categoria) {
 		String msg = "";
 		
 		try {
 			
-			catDAO.excluirCategoria(idCategoria);
+			catDAO.excluirCategoria(id_categoria);
 			
-			msg = "Categoria deleta com sucesso!";
+			msg = "Categoria exclíuda com sucesso";
 			
 			return Response.status(201).entity(msg).build();
 			
 		}catch (Exception e) {
+			
 			e.printStackTrace();
 			
-			msg = "Não foi possivel excluir a categoria";
+			msg = "Não foi possivel excluir a categoria de função";
 			
 			return Response.status(401).entity(msg).build();
-			
 		}
 		
 	}
@@ -104,16 +108,20 @@ public class CategoriaFuncaoResource {
 	@GET
 	@Path("/list")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CategoriaFuncao> listaCategoria(){
-		List<CategoriaFuncao> listaCategoria = null;
+	public Response listCategoria(){
+		List<CategoriaFuncao> listarCategoria = null;
 		
 		try {
-			listaCategoria = catDAO.listarCategoria();
+			
+			listarCategoria = catDAO.listarCategorias();
+			
+			return Response.status(201).entity(listarCategoria).build();
+			
 		}catch (Exception e) {
 			e.printStackTrace();
+			String msg = "Não foi possivel exibir a lista";
+			return Response.status(401).entity(msg).build();
 		}
-		
-		return listaCategoria;
 		
 	}
 	
@@ -121,12 +129,12 @@ public class CategoriaFuncaoResource {
 	@Path("/buscar/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findById(@PathParam("id") int idCategoria) {
+	public Response findById(@PathParam("id") int id_categoria) {
 		
 		String msg = "";
 		
 		try {
-			CategoriaFuncao catFnc = catDAO.findById(idCategoria);
+			CategoriaFuncao catFnc = catDAO.findById(id_categoria);
 			
 			return Response.status(201).entity(catFnc).build();
 		}
@@ -137,5 +145,5 @@ public class CategoriaFuncaoResource {
 		}
 		
 	}
-
+	
 }

@@ -1,47 +1,25 @@
 package com.gsartorato.scjdtws.entidade;
 
-import java.math.BigDecimal;
-
 public class CategoriaFuncao {
 	
-	private int idCategoria;
+	private int id_categoria;
 	
-	private String nomeCategoria;
-	
-	private BigDecimal salarioCategoria;
-	
-	private String descricaoCategoria;
+	private String nome_categoria;
 
-	public int getIdCategoria() {
-		return idCategoria;
+	public int getId_categoria() {
+		return id_categoria;
 	}
 
-	public void setIdCategoria(int idCategoria) {
-		this.idCategoria = idCategoria;
+	public String getNome_categoria() {
+		return nome_categoria;
 	}
 
-	public String getNomeCategoria() {
-		return nomeCategoria;
+	public void setNome_categoria(String nome_categoria) {
+		this.nome_categoria = nome_categoria;
 	}
 
-	public void setNomeCategoria(String nomeCategoria) {
-		this.nomeCategoria = nomeCategoria;
-	}
-
-	public BigDecimal getSalarioCategoria() {
-		return salarioCategoria;
-	}
-
-	public void setSalarioCategoria(BigDecimal salarioCategoria) {
-		this.salarioCategoria = salarioCategoria;
-	}
-
-	public String getDescricaoCategoria() {
-		return descricaoCategoria;
-	}
-
-	public void setDescricaoCategoria(String descricaoCategoria) {
-		this.descricaoCategoria = descricaoCategoria;
+	public void setId_categoria(int id_categoria) {
+		this.id_categoria = id_categoria;
 	}
 
 }

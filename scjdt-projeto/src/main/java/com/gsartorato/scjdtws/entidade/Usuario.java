@@ -4,28 +4,28 @@ import java.sql.Date;
 
 public class Usuario {
 	
-	private int idUsuario;
+	private int id_usuario;
 	
-	private String nomeUsuario;
+	private String nome_usuario;
 	
 	private String senha;
 	
 	public Date created_at;
 
-	public int getIdUsuario() {
-		return idUsuario;
+	public int getId_usuario() {
+		return id_usuario;
 	}
 
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setId_usuario(int id_usuario) {
+		this.id_usuario = id_usuario;
 	}
 
-	public String getNomeUsuario() {
-		return nomeUsuario;
+	public String getNome_usuario() {
+		return nome_usuario;
 	}
 
-	public void setNomeUsuario(String nomeUsuario) {
-		this.nomeUsuario = nomeUsuario;
+	public void setNome_usuario(String nome_usuario) {
+		this.nome_usuario = nome_usuario;
 	}
 
 	public String getSenha() {

@@ -39,6 +39,20 @@ export default function Dashboard() {
                     </div>
                 </div>
                 <div className="itens">
+                    <h2>Categoria de Funções</h2>
+                    <div className="button-group">
+                        <Link className="button" to="/category">Inserir</Link>
+                        <Link className="button button-color" to="/category-list">Consultar</Link>
+                    </div>
+                </div>
+                <div className="itens">
+                    <h2>Funções</h2>
+                    <div className="button-group">
+                        <Link className="button" to="/function-create">Inserir</Link>
+                        <Link className="button button-color" to="/function-list">Consultar</Link>
+                    </div>
+                </div>
+                <div className="itens">
                     <h2>Locais de trabalho</h2>
                     <div className="button-group">
                         <Link className="button" to="/local-create">Inserir</Link>
@@ -46,17 +60,10 @@ export default function Dashboard() {
                     </div>
                 </div>
                 <div className="itens">
-                    <h2>Função</h2>
-                    <div className="button-group">
-                        <Link className="button" to="/category">Inserir</Link>
-                        <Link className="button button-color" to="/category-list">Consultar</Link>
-                    </div>
-                </div>
-                <div className="itens">
                     <h2>Colaborador</h2>
                     <div className="button-group">
                         <Link className="button" to="/collaborator-create">Inserir</Link>
-                        <Link className="button button-color" to="/dashboard">Consultar</Link>
+                        <Link className="button button-color" to="/collaborator-list">Consultar</Link>
                     </div>
                 </div>
             </div>

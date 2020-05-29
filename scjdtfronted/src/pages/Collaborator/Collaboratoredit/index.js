@@ -46,14 +46,14 @@ export default function UserCreate(props) {
 
             return history.push('/dashboard')
         }
-        setName(response.data.nomeColaborador)
-        setBirthDate(adjustBirthDateToForm(response.data.dataNascimento))
+        setName(response.data.nome_colaborador)
+        setBirthDate(adjustBirthDateToForm(response.data.data_nascimento))
         setRg(response.data.rg)
         setCpf(response.data.cpf)
-        setWorkload(response.data.cargaHoraria)
+        setWorkload(response.data.carga_horaria)
         setEmail(response.data.email)
         setCep(response.data.cep)
-        setHomeType(response.data.tipoMoradia)
+        setHomeType(response.data.tipo_moradia)
         setAddress(response.data.rua)
         setNeighborhood(response.data.bairro)
         setCity(response.data.cidade)
@@ -63,7 +63,7 @@ export default function UserCreate(props) {
         setFunctionId(response.data.id_funcao)
         setActive(response.data.ativo)
 
-        await api.get('categoria/list').then(response => {
+        await api.get('funcao/list').then(response => {
             setFunctions(response.data)
         })
 
@@ -136,13 +136,13 @@ export default function UserCreate(props) {
         const cepFormated = cep.replace(/\D/g, "")
 
         const data = {
-            nomeColaborador: name,
-            dataNascimento: date,
+            nome_colaborador: name,
+            data_nascimento: date,
             rg: rgFormated,
             cpf: cpfFormated,
             email,
-            cargaHoraria: workload,
-            tipoMoradia: hometype,
+            carga_horaria: workload,
+            tipo_moradia: hometype,
             cep: cepFormated,
             rua: address,
             numero: number,
@@ -315,10 +315,10 @@ export default function UserCreate(props) {
                             {functions.map(func => {
                                 return (
                                     <option
-                                        key={func.idCategoria}
-                                        selected={functionId === func.idCategoria}
-                                        value={func.idCategoria}
-                                    >{func.nomeCategoria}
+                                        key={func.id_funcao}
+                                        selected={functionId === func.id_funcao}
+                                        value={func.id_funcao}
+                                    >{func.nome_funcao}
                                     </option>
 
                                 )

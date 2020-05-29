@@ -18,7 +18,7 @@ export default function Localcreate() {
         }
 
         const data = {
-            nomeLocalTrabalho: name,
+            nome_local_trabalho: name,
         }
         
         try {
