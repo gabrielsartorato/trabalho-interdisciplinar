@@ -20,6 +20,10 @@ import Localcreate from './pages/Localwork/Localcreate'
 import Locallist from './pages/Localwork/Locallist'
 import Localedit from './pages/Localwork/Localedit'
 
+import Hourlycreate from './pages/Hourlyschedulu/Hourlycreate'
+// import Hourlylist from './pages/Hourlyschedulu/Hourlylist'
+// import Hourlyedit from './pages/Hourlyschedulu/Hourlyedit'
+
 import Collaboratorcreate from './pages/Collaborator/Collaboratorcreate'
 import Collaboratoredit from './pages/Collaborator/Collaboratoredit'
 import Collaboratorlist from './pages/Collaborator/Collaboratorlist'
@@ -46,6 +50,10 @@ export default function Routes() {
                 <Route path="/local-create" component={Localcreate}/>
                 <Route path="/local-list" component={Locallist}/>
                 <Route path="/local-edit/:id" component={Localedit}/>
+
+                <Route path="/hourly-create" component={Hourlycreate}/>
+                {/* <Route path="/local-list" component={Locallist}/> */}
+                {/* <Route path="/local-edit/:id" component={Localedit}/> */}
 
                 <Route path="/collaborator-create" component={Collaboratorcreate}/>
                 <Route path="/collaborator-edit/:id" component={Collaboratoredit}/>
