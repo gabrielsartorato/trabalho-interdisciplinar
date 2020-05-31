@@ -13,7 +13,7 @@ import './style.css'
 export default function Categorylist() {
     const userName = localStorage.getItem('nomeUsuario')
     const history = useHistory()
-    const [functionList, setFunctionList] = useState([]);
+    const [hourList, setHourList] = useState([]);
 
     const user = adjustName(userName)
 
@@ -27,25 +27,25 @@ export default function Categorylist() {
     }
 
     useEffect(() => {
-        api.get('funcao/list').then(response => {
-            setFunctionList(response.data)
+        api.get('programacao/list').then(response => {
+            setHourList(response.data)
         })
     }, [])
 
-    function handleConfirm (func) {
-        const confirmation = window.confirm(`Deseja realmente deletar o usuário ${func.nome_funcao}`)
+    function handleConfirm (hour) {
+        const confirmation = window.confirm(`Deseja realmente deletar o usuário ${hour.nome_funcao}`)
 
         if(confirmation)
-            handleDeleteCategory(func.id_funcao)
+        handleDeleteProg(hour.id_programacao)
 
         window.event.preventDefault()
     }
 
 
-    async function handleDeleteCategory(id) {
+    async function handleDeleteProg(id) {
         try {
-            await api.delete(`funcao/delete/${id}`)
-            setFunctionList(functionList.filter(func => func.id_funcao !== id))
+            await api.delete(`programacao/delete/${id}`)
+            setHourList(hourList.filter(hour => hour.id_programacao !== id))
         }
         catch (err) {
             alert('Erro ao deletar a categoria, tente novamente!')
@@ -74,12 +74,12 @@ export default function Categorylist() {
                         </tr>
                     </thead>
                     <tbody>
-                        {functionList.map(func => (
-                            <tr key={func.id_funcao} className="tbody">
-                                <td>{func.nome_funcao}</td>
-                                <td className="action">
-                                    <a href={`/function-edit/${func.id_funcao}`}><FiEdit /></a>
-                                    <button onClick={() => handleConfirm(func)}><FiTrash /></button>
+                        {hourList.map(hour => (
+                            <tr key={hour.id_programacao} className="tbody">
+                                <td>{hour.nome_programacao}</td>
+                                <td className="action-hour">
+                                    <a href={`/hourly-edit/${hour.id_programacao}`}><FiEdit /></a>
+                                    <button onClick={() => handleConfirm(hour)}><FiTrash /></button>
                                 </td>
                             </tr>
                         ))}

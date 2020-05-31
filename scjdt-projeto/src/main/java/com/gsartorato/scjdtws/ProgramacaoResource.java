@@ -105,5 +105,23 @@ public class ProgramacaoResource {
 			return Response.status(401).entity(msg).build();
 		}
 	}
+	
+	@GET
+	@Path("/buscar/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarPorId(@PathParam("id") int id_programacao) {
+		String msg = "";
+		
+		try {
+			ProgramacaoHoraria progH = progDao.findById(id_programacao);
+			
+			return Response.status(201).entity(progH).build();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			msg = "Não foi possivel buscar a programação";
+			return Response.status(401).entity(msg).build();
+		}
+	}
 
 }

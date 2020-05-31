@@ -157,9 +157,9 @@ public class ProgramacaoHorariaDAO {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			
-			progH = new ProgramacaoHoraria();
 			
 			while(rs.next()) {
+				progH = new ProgramacaoHoraria();
 				progH.setId_programacao(rs.getInt("id_programacao"));
 				progH.setNome_programacao(rs.getString("nome_programacao"));
 				progH.setInicio_horario(rs.getTime("inicio_horario").toString());

@@ -66,6 +66,13 @@ export default function Dashboard() {
                         <Link className="button button-color" to="/collaborator-list">Consultar</Link>
                     </div>
                 </div>
+                <div className="itens">
+                    <h2>Programação Horária</h2>
+                    <div className="button-group">
+                        <Link className="button" to="/hourly-create">Inserir</Link>
+                        <Link className="button button-color" to="/hourly-list">Consultar</Link>
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -73,19 +73,19 @@
     text-decoration: none;
 }
 
-.action {
+.action-hour {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
 
-.action a {
+.action-hour a {
     text-align: center;
     padding: 4px;
     background: #81eff37a;
     border-radius: 8px;
 }
 
-.action button {
+.action-hour button {
     border-radius: 8px;
     border: none;
 }
