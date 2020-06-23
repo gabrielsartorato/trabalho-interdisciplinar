@@ -75,7 +75,29 @@ CREATE TABLE "colaborador" (
 
 ALTER TABLE "colaborador" ADD FOREIGN KEY ("id_funcao") REFERENCES "funcao" ("id_funcao");
 
+CREATE TABLE "escala_padrao" (
+  "id_escala" SERIAL PRIMARY KEY,
+  "id_programacao" int  NOT NULL,
+  "id_colaborador" int NOT NULL,
+  "created_at" timestamp,
+  "updated_at" timestamp
+)
 
+ALTER TABLE "escala_padrao" ADD FOREIGN KEY ("id_programacao") REFERENCES "programacao_horaria" ("id_programacao")
+ALTER TABLE "escala_padrao" ADD FOREIGN KEY ("id_colaborador") REFERENCES "colaborador" ("id_colaborador")
+
+CREATE TABLE "programacao_ferias" (
+  "id_ferias" SERIAL PRIMARY KEY,
+  "id_colaborador" int NOT NULL,
+  "data_inicio" timestamp NOT NULL,
+  "data_fim" timestamp NOT NULL,
+  "created_at" timestamp,
+  "updated_at" timestamp
+)
+
+ALTER TABLE "programacao_ferias" ADD FOREIGN KEY ("id_colaborador") REFERENCES "colaborador" ("id_colaborador")
+DELETE FROM programacao_ferias
+ALTER SEQUENCE programacao_ferias_id_ferias_seq RESTART WITH 1
 
 -- create procedure
 CREATE FUNCTION trigger_set_timestamp()
@@ -113,6 +135,18 @@ EXECUTE PROCEDURE trigger_set_timestamp();
 -- auto updated_at categoria_funcao
 CREATE TRIGGER set_timestamp_localTrabalho 
 BEFORE UPDATE ON programacao_horaria
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
+
+-- auto updated_at escala_padrão
+CREATE TRIGGER set_timestamp_escalaPadrao 
+BEFORE UPDATE ON escala_padrao
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
+
+-- auto updated_at programacao_ferias
+CREATE TRIGGER set_timestamp_programacaoFerias 
+BEFORE UPDATE ON programacao_ferias
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
