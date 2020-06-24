@@ -61,6 +61,10 @@ public class ProgramacaoFeriasDAO {
 				if(dataInicioBanco.equals(dataInicioResource) || dataInicioResource.before(dataInicioBanco)) {
 					throw new RegraNegocioException("Férias não pode ser menor que a data anterior das últimas férias");
 				}
+				
+				if(dataInicioResource.before(dataFimResource)) {
+					throw new RegraNegocioException("Data inicial não pode ser menor que a data final");
+				}
 			}
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
@@ -80,6 +84,47 @@ public class ProgramacaoFeriasDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
+		}
+	}
+	
+	public void alterarProgramacaoFerias(ProgramacaoFerias progFerias, int id_ferias) throws Exception, SQLException {
+		
+		Connection conn = DBConfig.getConnection();
+		
+		String sql = "UPDATE programacao_ferias SET id_colaborador = ?, data_inicio = ?::date, data_fim = ?::date WHERE id_ferias = ?";
+		
+		try {
+			ProgramacaoFerias progChek = new ProgramacaoFerias();
+			
+			progChek = verificarSeExiste(progFerias.getId_colaborador());
+			
+			// new SimpleDateFormat("dd/MM/yyyy");
+			String dateNowString = new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis()));
+			
+			String[] data_inicio_bd = progChek.getData_inicio().split(" ");
+			String[] data_inicio_format = data_inicio_bd[0].split("-");
+			String data_inicio = data_inicio_format[2]+"/"+data_inicio_format[1]+"/"+data_inicio_format[0];
+			
+			Date dateNowDate = new SimpleDateFormat("dd/MM/yyyy").parse(dateNowString);
+			Date dateInicioBd = new SimpleDateFormat("dd/MM/yyyy").parse(data_inicio);
+						
+			if(progChek != null) {
+				if(dateNowDate.after(dateInicioBd)) {
+					throw new RegraNegocioException("Programação de férias não pode ser editada após o inicio!");
+				}
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, progFerias.getId_colaborador());
+				stmt.setString(2, progFerias.getData_inicio());
+				stmt.setString(3, progFerias.getData_fim());
+				stmt.setInt(4, id_ferias);
+				
+				stmt.execute();
+				stmt.close();
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
