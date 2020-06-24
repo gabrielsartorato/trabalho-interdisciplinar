@@ -54,7 +54,7 @@ public class ProgramcaoFeriasResource {
 	@Path("/edit/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response editarProgramacao(@PathParam("id") int id_ferias, ProgramacaoFerias progFerias) throws SQLException, Exception {
+	public Response editarProgramacao(@PathParam("id") int id_ferias, ProgramacaoFerias progFerias) throws SQLException, Exception, RegraNegocioException {
 		String msg = "";
 		
 		try {
@@ -67,7 +67,6 @@ public class ProgramcaoFeriasResource {
 		} catch (RegraNegocioException e) {
 			e.printStackTrace();
 			msg = e.getMessage();
-			System.out.println(msg);
 			return Response.status(400).entity(msg).build();
 		}
 	}

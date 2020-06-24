@@ -9,7 +9,6 @@ import java.util.Date;
 import java.text.SimpleDateFormat;  
 
 import com.gsartorato.scjdtws.config.DBConfig;
-import com.gsartorato.scjdtws.entidade.EscalaPadrao;
 import com.gsartorato.scjdtws.entidade.ProgramacaoFerias;
 import com.gsartorato.scjdtws.exception.RegraNegocioException;
 
@@ -87,31 +86,36 @@ public class ProgramacaoFeriasDAO {
 		}
 	}
 	
-	public void alterarProgramacaoFerias(ProgramacaoFerias progFerias, int id_ferias) throws Exception, SQLException {
+	public void alterarProgramacaoFerias(ProgramacaoFerias progFerias, int id_ferias) throws Exception, SQLException, RegraNegocioException {
 		
 		Connection conn = DBConfig.getConnection();
 		
 		String sql = "UPDATE programacao_ferias SET id_colaborador = ?, data_inicio = ?::date, data_fim = ?::date WHERE id_ferias = ?";
+		ProgramacaoFerias progChek = new ProgramacaoFerias();
+		
+		progChek = verificarSeExiste(progFerias.getId_colaborador());
+		
+		String dateNowString = new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis()));
+		
+		String[] data_inicio_bd = progChek.getData_inicio().split(" ");
+		String[] data_inicio_format = data_inicio_bd[0].split("-");
+		String data_inicio = data_inicio_format[2]+"/"+data_inicio_format[1]+"/"+data_inicio_format[0];
+		
+		Date dateNowDate = new SimpleDateFormat("dd/MM/yyyy").parse(dateNowString);
+		Date dateInicioBd = new SimpleDateFormat("dd/MM/yyyy").parse(data_inicio);
+		
+		if(dateNowDate.after(dateInicioBd)) {
+			throw new RegraNegocioException("Programação de férias não pode ser editada após o inicio!");
+		}
+		
+		if(progFerias.getData_inicio().equals("") || progFerias.getData_fim().equals("")) {
+			throw new RegraNegocioException("Preencha todos os campos obrigatórios!");
+		}
 		
 		try {
-			ProgramacaoFerias progChek = new ProgramacaoFerias();
-			
-			progChek = verificarSeExiste(progFerias.getId_colaborador());
-			
-			// new SimpleDateFormat("dd/MM/yyyy");
-			String dateNowString = new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis()));
-			
-			String[] data_inicio_bd = progChek.getData_inicio().split(" ");
-			String[] data_inicio_format = data_inicio_bd[0].split("-");
-			String data_inicio = data_inicio_format[2]+"/"+data_inicio_format[1]+"/"+data_inicio_format[0];
-			
-			Date dateNowDate = new SimpleDateFormat("dd/MM/yyyy").parse(dateNowString);
-			Date dateInicioBd = new SimpleDateFormat("dd/MM/yyyy").parse(data_inicio);
-						
+
 			if(progChek != null) {
-				if(dateNowDate.after(dateInicioBd)) {
-					throw new RegraNegocioException("Programação de férias não pode ser editada após o inicio!");
-				}
+				
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, progFerias.getId_colaborador());
 				stmt.setString(2, progFerias.getData_inicio());
@@ -123,7 +127,7 @@ public class ProgramacaoFeriasDAO {
 				
 			}
 			
-		} catch (Exception e) {
+		} catch (RegraNegocioException e) {
 			e.printStackTrace();
 		}
 	}
