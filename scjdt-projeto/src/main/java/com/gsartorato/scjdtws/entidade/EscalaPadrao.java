@@ -7,6 +7,8 @@ public class EscalaPadrao {
 	private int id_programacao;
 	
 	private int id_colaborador;
+	
+	private int status;
 
 	public int getId_escala() {
 		return id_escala;
@@ -30,6 +32,14 @@ public class EscalaPadrao {
 
 	public void setId_colaborador(int id_colaborador) {
 		this.id_colaborador = id_colaborador;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 }

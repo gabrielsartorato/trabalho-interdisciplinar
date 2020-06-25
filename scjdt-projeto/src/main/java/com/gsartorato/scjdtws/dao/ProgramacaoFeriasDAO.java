@@ -14,8 +14,6 @@ import com.gsartorato.scjdtws.config.DBConfig;
 import com.gsartorato.scjdtws.entidade.ProgramacaoFerias;
 import com.gsartorato.scjdtws.exception.RegraNegocioException;
 
-import sun.security.pkcs11.Secmod.DbMode;
-
 public class ProgramacaoFeriasDAO {
 	
 	DBConfig conn = new DBConfig();

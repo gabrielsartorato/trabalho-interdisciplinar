@@ -18,7 +18,6 @@ import javax.ws.rs.core.Response;
 import com.gsartorato.scjdtws.dao.ProgramacaoFeriasDAO;
 import com.gsartorato.scjdtws.entidade.ProgramacaoFerias;
 import com.gsartorato.scjdtws.exception.RegraNegocioException;
-import com.sun.xml.internal.stream.Entity;
 
 @Path("/ferias")
 public class ProgramcaoFeriasResource {
