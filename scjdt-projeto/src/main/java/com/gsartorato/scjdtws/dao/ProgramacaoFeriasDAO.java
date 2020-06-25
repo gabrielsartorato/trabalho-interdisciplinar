@@ -5,12 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.text.SimpleDateFormat;  
 
 import com.gsartorato.scjdtws.config.DBConfig;
 import com.gsartorato.scjdtws.entidade.ProgramacaoFerias;
 import com.gsartorato.scjdtws.exception.RegraNegocioException;
+
+import sun.security.pkcs11.Secmod.DbMode;
 
 public class ProgramacaoFeriasDAO {
 	
@@ -225,6 +229,32 @@ public class ProgramacaoFeriasDAO {
 		}
 
 		return progF;
+	}
+	
+	public List<ProgramacaoFerias> listarProgramacaoFerias() throws Exception, SQLException {
+		List<ProgramacaoFerias> listarProgramacao = new ArrayList<ProgramacaoFerias>();
+		
+		Connection conn = DBConfig.getConnection();
+		
+		String sql = "SELECT * FROM programacao_ferias";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			ProgramacaoFerias progFerias = new ProgramacaoFerias();
+			
+			progFerias.setId_colaborador(rs.getInt("id_colaborador"));
+			progFerias.setData_inicio(rs.getTimestamp("data_inicio").toString());
+			progFerias.setData_fim(rs.getTimestamp("data_fim").toString());
+			
+			listarProgramacao.add(progFerias);
+			
+		}
+		
+		return listarProgramacao;
+		
 	}
 
 }

@@ -21,7 +21,6 @@ public class ColaboradorDAO {
 	
 	Colaborador colaborador = null;
 	
-	
 	public void inserirColaborador(Colaborador col) throws Exception, SQLException {
 		
 		Connection conn = DBConfig.getConnection();

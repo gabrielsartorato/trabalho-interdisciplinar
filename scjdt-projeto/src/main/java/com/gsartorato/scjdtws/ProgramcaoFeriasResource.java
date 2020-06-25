@@ -1,10 +1,12 @@
 package com.gsartorato.scjdtws;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -13,11 +15,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.eclipse.persistence.annotations.DeleteAll;
-
 import com.gsartorato.scjdtws.dao.ProgramacaoFeriasDAO;
 import com.gsartorato.scjdtws.entidade.ProgramacaoFerias;
 import com.gsartorato.scjdtws.exception.RegraNegocioException;
+import com.sun.xml.internal.stream.Entity;
 
 @Path("/ferias")
 public class ProgramcaoFeriasResource {
@@ -96,6 +97,24 @@ public class ProgramcaoFeriasResource {
 			e.printStackTrace();
 			msg = e.getMessage();
 			return Response.status(200).entity(msg).build();
+		}
+	}
+	
+	@GET
+	@Path("/list")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listarProgramacaoFerias() {
+		List<ProgramacaoFerias> listarColaborador = null;
+		
+		try {
+			
+			listarColaborador = programacaoFeriasDAO.listarProgramacaoFerias();
+			
+			return Response.status(200).entity(listarColaborador).build();
+		} catch (Exception e) {
+			String msg = e.getMessage();
+			return Response.status(400).entity(msg).build();
 		}
 	}
 }
