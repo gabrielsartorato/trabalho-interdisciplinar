@@ -41,13 +41,8 @@ public class ProgramacaoFeriasDAO {
 				String[] data_inicio_format = data_inicio_bd[0].split("-");
 				String data_inicio = data_inicio_format[2]+"/"+data_inicio_format[1]+"/"+data_inicio_format[0];
 				
-				String[] data_fim_bd = progChe.getData_fim().split(" ");
-				String[] data_fim_format = data_fim_bd[0].split("-");
-				String data_fim = data_fim_format[2]+"/"+data_fim_format[1]+"/"+data_fim_format[0];
-				
 				Date dataInicioBanco = new SimpleDateFormat("dd/MM/yyyy").parse(data_inicio);
-				Date dataFimBanco = new SimpleDateFormat("dd/MM/yyyy").parse(data_fim);
-				
+
 				//convertendo data do resource
 				String[] data_inicio_resource = progFer.getData_inicio().split("-");
 				String data_inicio_resource_format = data_inicio_resource[2]+"/"+data_inicio_resource[1]+"/"+data_inicio_resource[0];
@@ -91,6 +86,7 @@ public class ProgramacaoFeriasDAO {
 		Connection conn = DBConfig.getConnection();
 		
 		String sql = "UPDATE programacao_ferias SET id_colaborador = ?, data_inicio = ?::date, data_fim = ?::date WHERE id_ferias = ?";
+		
 		ProgramacaoFerias progChek = new ProgramacaoFerias();
 		
 		progChek = verificarSeExiste(progFerias.getId_colaborador());
@@ -132,6 +128,41 @@ public class ProgramacaoFeriasDAO {
 		}
 	}
 	
+	public void excluirProgramacaoFerias(int id_ferias) throws Exception, SQLException {
+		
+		Connection conn = DBConfig.getConnection();
+		
+		ProgramacaoFerias progChek = new ProgramacaoFerias();
+		
+		progChek = verificarSeExiste(id_ferias);
+		
+		String[] data_inicio_bd = progChek.getData_inicio().split(" ");
+		String[] data_inicio_format = data_inicio_bd[0].split("-");
+		String data_inicio = data_inicio_format[2]+"/"+data_inicio_format[1]+"/"+data_inicio_format[0];
+		
+		String dateNowString = new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis()));
+		
+		Date dateNowDate = new SimpleDateFormat("dd/MM/yyyy").parse(dateNowString);
+		Date dateInicioBd = new SimpleDateFormat("dd/MM/yyyy").parse(data_inicio);
+		
+		if(dateNowDate.after(dateInicioBd)) {
+			throw new RegraNegocioException("Programação de férias não pode ser exclúida após o inicio ou termino!");
+		}
+		
+		String sql = "DELETE FROM programacao_ferias WHERE id_ferias = ?";
+		
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id_ferias);
+			
+			stmt.execute();
+			stmt.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public ProgramacaoFerias verificarSeExiste(int id_colaborador) throws Exception, SQLException {
 		
 		Connection conn = DBConfig.getConnection();
@@ -145,6 +176,38 @@ public class ProgramacaoFeriasDAO {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			
 			stmt.setInt(1, id_colaborador);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				progF = new ProgramacaoFerias();
+				progF.setId_ferias(rs.getInt("id_ferias"));
+				progF.setId_colaborador(rs.getInt("id_colaborador"));
+				progF.setData_inicio(rs.getTimestamp("data_inicio").toString());
+				progF .setData_fim(rs.getTimestamp("data_fim").toString());
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return progF;
+	}
+	
+	public ProgramacaoFerias buscarById(int id_ferias) throws Exception, SQLException {
+		
+		Connection conn = DBConfig.getConnection();
+		
+		ProgramacaoFerias progF = null;
+		
+		String sql = "SELECT * FROM programacao_ferias WHERE id_ferias = ?";
+		
+		try {
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setInt(1, id_ferias);
 			
 			ResultSet rs = stmt.executeQuery();
 			

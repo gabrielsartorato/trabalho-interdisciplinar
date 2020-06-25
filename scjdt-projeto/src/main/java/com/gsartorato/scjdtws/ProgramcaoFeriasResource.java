@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import javax.annotation.PostConstruct;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -11,6 +12,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.eclipse.persistence.annotations.DeleteAll;
 
 import com.gsartorato.scjdtws.dao.ProgramacaoFeriasDAO;
 import com.gsartorato.scjdtws.entidade.ProgramacaoFerias;
@@ -70,5 +73,29 @@ public class ProgramcaoFeriasResource {
 			return Response.status(400).entity(msg).build();
 		}
 	}
-
+	
+	@DELETE
+	@Path("/delete/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response deleterProgramacaoFerias(@PathParam("id") int id_ferias) {
+		String msg = "";
+		
+		try {
+			programacaoFeriasDAO.excluirProgramacaoFerias(id_ferias);
+			
+			msg = "Programação excluída com sucesso";
+			
+			return Response.status(200).entity(msg).build();
+			
+		} catch (RegraNegocioException e) {
+			e.printStackTrace();
+			msg = e.getMessage();
+			return Response.status(200).entity(msg).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = e.getMessage();
+			return Response.status(200).entity(msg).build();
+		}
+	}
 }
