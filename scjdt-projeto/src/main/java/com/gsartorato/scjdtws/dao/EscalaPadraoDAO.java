@@ -73,10 +73,12 @@ public class EscalaPadraoDAO {
 		String sql = "SELECT escala_padrao.*, "
 				+ "programacao_horaria.nome_programacao, "
 				+ "programacao_horaria.inicio_horario, "
-				+ "programacao_horaria.fim_horario "
+				+ "programacao_horaria.fim_horario,"
+				+ "colaborador.nome_colaborador "
 				+ "FROM escala_padrao "
 				+ "LEFT JOIN programacao_horaria ON (escala_padrao.id_programacao = programacao_horaria.id_programacao) "
-				+ "WHERE id_colaborador = ?";
+				+ "LEFT JOIN colaborador ON (escala_padrao.id_colaborador = colaborador.id_colaborador) "
+				+ "WHERE escala_padrao.id_colaborador = ?";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, id_colaborador);
@@ -92,6 +94,7 @@ public class EscalaPadraoDAO {
 			escPadrao.setFim_horario(rs.getTimestamp("fim_horario").toString());
 			escPadrao.setStatus(rs.getInt("status"));
 			escPadrao.setNome_programacao(rs.getString("nome_programacao"));
+			escPadrao.setNome_colaborador(rs.getString("nome_colaborador"));
 			
 			String[] dataInicio = escPadrao.getInicio_horario().split(" ");
 			String[] dataFim = escPadrao.getFim_horario().split(" ");
@@ -126,6 +129,92 @@ public class EscalaPadraoDAO {
 		
 	}
 	
+	public List<EscalaPadraoToFront> listarTodasEscalas() throws Exception, SQLException {
+		List<EscalaPadraoToFront> listarEscalas = new ArrayList<EscalaPadraoToFront>();
+		
+		EscalaPadraoToFront escPadrao = null;
+		
+		Connection conn = DBConfig.getConnection();
+		
+		String sql = "SELECT escala_padrao.*, "
+				+ "programacao_horaria.nome_programacao, "
+				+ "programacao_horaria.inicio_horario, "
+				+ "programacao_horaria.fim_horario,"
+				+ "colaborador.nome_colaborador "
+				+ "FROM escala_padrao LEFT JOIN programacao_horaria ON (escala_padrao.id_programacao = programacao_horaria.id_programacao) "
+				+ "LEFT JOIN colaborador ON (escala_padrao.id_colaborador = colaborador.id_colaborador)"
+				+ "ORDER BY id_colaborador ASC, inicio_horario ASC";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			escPadrao = new EscalaPadraoToFront();
+			
+			escPadrao.setId_escala(rs.getInt("id_escala"));
+			escPadrao.setId_programacao(rs.getInt("id_programacao"));
+			escPadrao.setId_colaborador(rs.getInt("id_colaborador"));
+			escPadrao.setStatus(rs.getInt("status"));
+			escPadrao.setNome_programacao(rs.getString("nome_programacao"));
+			escPadrao.setInicio_horario(rs.getTimestamp("inicio_horario").toString());
+			escPadrao.setFim_horario(rs.getString("fim_horario").toString());
+			escPadrao.setNome_colaborador(rs.getString("nome_colaborador"));
+			
+			String[] dataInicio = escPadrao.getInicio_horario().split(" ");
+			
+			escPadrao.setInicio_horario(dataInicio[1]);
+			
+			System.out.println(escPadrao.getFim_horario());
+			
+			listarEscalas.add(escPadrao);
+			
+		}	
+		
+		return listarEscalas;
+	}
+	
+	public EscalaPadraoToFront findById(int id_escala) throws Exception, SQLException {
+		
+		Connection conn = DBConfig.getConnection();
+		
+		EscalaPadraoToFront escPadrao = null;
+		
+		String sql = "SELECT escala_padrao.*, "
+				+ "programacao_horaria.nome_programacao, "
+				+ "programacao_horaria.inicio_horario, "
+				+ "programacao_horaria.fim_horario,"
+				+ "colaborador.nome_colaborador "
+				+ "FROM escala_padrao "
+				+ "LEFT JOIN programacao_horaria ON (escala_padrao.id_programacao = programacao_horaria.id_programacao) "
+				+ "LEFT JOIN colaborador ON (escala_padrao.id_colaborador = colaborador.id_colaborador) "
+				+ "WHERE id_escala = ?";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, id_escala);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		if(rs.next()) {
+			escPadrao = new EscalaPadraoToFront();
+			escPadrao.setId_escala(rs.getInt("id_escala"));
+			escPadrao.setId_programacao(rs.getInt("id_programacao"));
+			escPadrao.setId_colaborador(rs.getInt("id_colaborador"));
+			escPadrao.setInicio_horario(rs.getTimestamp("inicio_horario").toString());
+			escPadrao.setFim_horario(rs.getTimestamp("fim_horario").toString());
+			escPadrao.setStatus(rs.getInt("status"));
+			escPadrao.setNome_programacao(rs.getString("nome_programacao"));
+			escPadrao.setNome_colaborador(rs.getString("nome_colaborador"));
+			
+			String[] dataInicio = escPadrao.getInicio_horario().split(" ");
+			String[] dataFim = escPadrao.getFim_horario().split(" ");
+			
+			escPadrao.setInicio_horario(dataInicio[1]);
+			escPadrao.setFim_horario(dataFim[1]);
+		}
+		
+		return escPadrao;
+	}
 	public int verificarSeExisteEscalaNoMesmoHorario(int id_colaborador, int id_programacao) throws Exception, SQLException {
 		List<ProgramacaoHoraria> listProgramacaoHoraria = new ArrayList<ProgramacaoHoraria>();
 		ProgramacaoHoraria progHora = null;

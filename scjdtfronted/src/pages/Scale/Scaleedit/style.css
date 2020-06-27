@@ -1,4 +1,4 @@
-.register-container {
+.scale-container {
     width: 100%;
     max-width: 1120px;
     height: 100vh;
@@ -9,7 +9,7 @@
     justify-content: center;
 }
 
-.register-container .content {
+.scale-container .content {
     width: 100%;
     padding: 96px;
     background: #f0f0f5;
@@ -23,33 +23,41 @@
 
 }
 
-.register-container .content section {
+.scale-container .content section {
     width: 100%;
     max-width: 380px;
 }
 
-.register-container .content section h1 {
+.scale-container .content section h1 {
     margin: 8px 0 32px;
     font-size: 32px;
 }
 
-.register-container .content section p {
+.scale-container .content section p {
     font-size: 18px;
     color: #737380;
     line-height: 32px;
 }
 
-.register-container .content form {
+.scale-container .content form {
     width: 100%;
     max-width: 450px;
 }
 
-.register-container .content input {
+.scale-container .content input {
     margin-top: 8px;
 }
 
-.register-container form textarea {
+.scale-container form textarea {
     resize: vertical;
     margin-top: 8px;
     padding: 8px 24px;
+}
+
+.scale-container .content form .input-group {
+    display: flex;
+}
+
+.scale-container .content form .input-group input + input {
+    margin-left: 8px;
 }

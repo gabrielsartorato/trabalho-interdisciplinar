@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { useHistory } from 'react-router-dom'
 
-import { FiPower, FiTrash, FiEdit, FiHome } from 'react-icons/fi'
+import { FiPower, FiEdit, FiHome } from 'react-icons/fi'
 import timerSvg from '../../../assets/clock.svg'
 import { adjustName } from '../../../libs/utils'
 
@@ -13,7 +13,7 @@ import './style.css'
 export default function Categorylist() {
     const userName = localStorage.getItem('nomeUsuario')
     const history = useHistory()
-    const [categoryList, setCategoryList] = useState([]);
+    const [scalePatternList, setScalePatternList] = useState([]);
 
     const user = adjustName(userName)
 
@@ -27,30 +27,10 @@ export default function Categorylist() {
     }
 
     useEffect(() => {
-        api.get('categoria/list').then(response => {
-            setCategoryList(response.data)
+        api.get('escala/listarTodos').then(response => {
+          setScalePatternList(response.data)
         })
     }, [])
-
-    function handleConfirm (category) {
-        const confirmation = window.confirm(`Deseja realmente deletar o usuário ${category.nomeCategoria}`)
-
-        if(confirmation)
-            handleDeleteCategory(category.id_categoria)
-
-        window.event.preventDefault()
-    }
-
-
-    async function handleDeleteCategory(id) {
-        try {
-            await api.delete(`categoria/delete/${id}`)
-            setCategoryList(categoryList.filter(category => category.id_categoria !== id))
-        }
-        catch (err) {
-            alert('Erro ao deletar a categoria, tente novamente!')
-        }
-    }
 
     return (
         <div className="dashboard-container">
@@ -69,17 +49,24 @@ export default function Categorylist() {
                 <table className="user-list">
                     <thead>
                         <tr>
-                            <th>Funções</th>
+                            <th>Nome do Colaborador</th>
+                            <th>Nome da Programação</th>
+                            <th>Status Programação</th>
+                            <th>Horário Ínicio</th>
+                            <th>Horário Fim</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {categoryList.map(category => (
-                            <tr key={category.id_categoria} className="tbody">
-                                <td>{category.nome_categoria}</td>
+                        {scalePatternList.map(scale => (
+                            <tr key={scale.id_escala} className="tbody">
+                                <td>{scale.nome_colaborador}</td>
+                                <td>{scale.nome_programacao}</td>
+                                <td>{scale.inicio_horario}</td>
+                                <td>{scale.fim_horario}</td>
+                                <td>{scale.status === 0 ? "Inativo" : "Ativo"}</td>
                                 <td className="action">
-                                    <a href={`/category-edit/${category.id_categoria}`}><FiEdit /></a>
-                                    <button onClick={() => handleConfirm(category)}><FiTrash /></button>
+                                    <a href={`/scale-edit/${scale.id_escala}`}><FiEdit /></a>
                                 </td>
                             </tr>
                         ))}

@@ -34,12 +34,11 @@ public class EscalaPadraoResource {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response addEscala(EscalaPadrao escalaPadrao) {
 		String msg = "";
-		int id_escala = 0;
 		
 		try {
-			id_escala = escalaDao.inserirEscala(escalaPadrao);
+			escalaDao.inserirEscala(escalaPadrao);
 			
-			msg = "Escala incluída com sucesso, id: " + id_escala;
+			msg = "Escala incluída com sucesso.";
 			
 			return Response.status(200).entity(msg).build();
 		} catch (Exception e) {
@@ -83,6 +82,51 @@ public class EscalaPadraoResource {
 			listarEscala = escalaDao.listarPorColaborador(id_colaborador);
 			
 			return Response.status(200).entity(listarEscala).build();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			msg = e.getMessage();
+			
+			return Response.status(401).entity(msg).build();
+		}
+	}
+	
+	@GET
+	@Path("/listarTodos")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listarTodos() {
+		
+		String msg = "";
+		
+		List<EscalaPadraoToFront> listarTodos = new ArrayList<EscalaPadraoToFront>();
+		
+		try {
+			
+			listarTodos = escalaDao.listarTodasEscalas();
+			
+			return Response.status(200).entity(listarTodos).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = e.getMessage();
+			return Response.status(400).entity(msg).build();
+		} 
+	}
+	
+	@GET
+	@Path("/buscarPorId/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarPorId(@PathParam("id") int id_escala) {
+		String msg = "";
+
+		EscalaPadraoToFront escaPadrao = new EscalaPadraoToFront();
+		
+		try {
+			
+			escaPadrao = escalaDao.findById(id_escala);
+			
+			return Response.status(200).entity(escaPadrao).build();
 			
 		} catch (Exception e) {
 			e.printStackTrace();

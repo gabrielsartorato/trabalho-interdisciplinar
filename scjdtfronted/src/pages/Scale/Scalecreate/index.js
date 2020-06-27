@@ -40,20 +40,20 @@ export default function scale() {
       return
     }
 
-    // const data = {
-    //   id_programacao: idProgramation,
-    //   id_colaborador: idCollaborator
-    // }
+    const data = {
+      id_programacao: idProgramation,
+      id_colaborador: idCollaborator
+    }
 
-    // try {
-    //     const response = await api.post('categoria/add', data)
+    try {
+        const response = await api.post('escala/add', data)
 
-    //     alert(response.data)
-    //     history.push('/dashboard')
-    // }
-    // catch (err) {
-    //     alert(err.reponse.data)
-    // }
+        alert(response.data)
+        history.push('/dashboard')
+    }
+    catch (err) {
+        alert(err.reponse.data)
+    }
   }
 
   return (

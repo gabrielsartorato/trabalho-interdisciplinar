@@ -29,8 +29,8 @@ import Collaboratoredit from './pages/Collaborator/Collaboratoredit'
 import Collaboratorlist from './pages/Collaborator/Collaboratorlist'
 
 import Scalecreate from './pages/Scale/Scalecreate'
-// import Scaleedit from './pages/Scale/Scaleedit'
-// import Scalelist from './pages/Scale/Scalelist'
+import Scaleedit from './pages/Scale/Scaleedit'
+import Scalelist from './pages/Scale/Scalelist'
 
 export default function Routes() {
     return (
@@ -59,9 +59,13 @@ export default function Routes() {
                 <Route path="/hourly-list" component={Hourlylist}/>
                 <Route path="/hourly-edit/:id" component={Hourlyedit}/>
 
+                <Route path="/collaborator-create" component={Collaboratorcreate}/>
+                <Route path="/collaborator-list" component={Collaboratoredit}/>
+                <Route path="/collaborator-edit/:id" component={Collaboratorlist}/>
+
                 <Route path="/scale-create" component={Scalecreate}/>
-                {/* <Route path="/scale-edit/:id" component={Scaleedit}/> */}
-                {/* <Route path="/scale-list" component={Scalelist}/> */}
+                <Route path="/scale-edit/:id" component={Scaleedit}/>
+                <Route path="/scale-list" component={Scalelist}/>
             </Switch>
         </BrowserRouter>
     );

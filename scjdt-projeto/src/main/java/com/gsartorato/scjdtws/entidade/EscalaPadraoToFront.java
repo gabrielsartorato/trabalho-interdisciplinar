@@ -15,6 +15,16 @@ public class EscalaPadraoToFront {
 	
 	private String fim_horario;
 	
+	private String nome_colaborador;
+	
+	public String getNome_colaborador() {
+		return nome_colaborador;
+	}
+
+	public void setNome_colaborador(String nome_colaborador) {
+		this.nome_colaborador = nome_colaborador;
+	}
+
 	public String getNome_programacao() {
 		return nome_programacao;
 	}
