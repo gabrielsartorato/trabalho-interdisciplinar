@@ -1,7 +1,11 @@
 package com.gsartorato.scjdtws;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -12,6 +16,7 @@ import javax.ws.rs.core.Response;
 
 import com.gsartorato.scjdtws.dao.EscalaPadraoDAO;
 import com.gsartorato.scjdtws.entidade.EscalaPadrao;
+import com.gsartorato.scjdtws.entidade.EscalaPadraoToFront;
 
 @Path("/escala")
 public class EscalaPadraoResource {
@@ -59,6 +64,29 @@ public class EscalaPadraoResource {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			msg = e.getMessage();
+			
+			return Response.status(401).entity(msg).build();
+		}
+	}
+	
+	@GET
+	@Path("/buscar/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarPorColaborador(@PathParam("id") int id_colaborador) {
+		String msg = "";
+
+		List<EscalaPadraoToFront> listarEscala = new ArrayList<EscalaPadraoToFront>();
+		
+		try {
+			listarEscala = escalaDao.listarPorColaborador(id_colaborador);
+			
+			return Response.status(200).entity(listarEscala).build();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
 			msg = e.getMessage();
 			
 			return Response.status(401).entity(msg).build();

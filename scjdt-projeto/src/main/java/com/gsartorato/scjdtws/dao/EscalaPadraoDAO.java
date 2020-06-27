@@ -13,6 +13,7 @@ import java.util.List;
 
 import com.gsartorato.scjdtws.config.DBConfig;
 import com.gsartorato.scjdtws.entidade.EscalaPadrao;
+import com.gsartorato.scjdtws.entidade.EscalaPadraoToFront;
 import com.gsartorato.scjdtws.entidade.ProgramacaoHoraria;
 import com.gsartorato.scjdtws.exception.RegraNegocioException;
 
@@ -60,6 +61,50 @@ public class EscalaPadraoDAO {
 		}
 		
 		return 0;
+	}
+	
+	public List<EscalaPadraoToFront> listarPorColaborador(int id_colaborador) throws Exception, SQLException {
+		List<EscalaPadraoToFront> listarEscalaPorColaborador = new ArrayList<EscalaPadraoToFront>();
+		
+		EscalaPadraoToFront escPadrao = null;
+		
+		Connection conn = DBConfig.getConnection();
+		
+		String sql = "SELECT escala_padrao.*, "
+				+ "programacao_horaria.nome_programacao, "
+				+ "programacao_horaria.inicio_horario, "
+				+ "programacao_horaria.fim_horario "
+				+ "FROM escala_padrao "
+				+ "LEFT JOIN programacao_horaria ON (escala_padrao.id_programacao = programacao_horaria.id_programacao) "
+				+ "WHERE id_colaborador = ?";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, id_colaborador);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			escPadrao = new EscalaPadraoToFront();
+			escPadrao.setId_escala(rs.getInt("id_escala"));
+			escPadrao.setId_programacao(rs.getInt("id_programacao"));
+			escPadrao.setId_colaborador(rs.getInt("id_colaborador"));
+			escPadrao.setInicio_horario(rs.getTimestamp("inicio_horario").toString());
+			escPadrao.setFim_horario(rs.getTimestamp("fim_horario").toString());
+			escPadrao.setStatus(rs.getInt("status"));
+			escPadrao.setNome_programacao(rs.getString("nome_programacao"));
+			
+			String[] dataInicio = escPadrao.getInicio_horario().split(" ");
+			String[] dataFim = escPadrao.getFim_horario().split(" ");
+			
+			escPadrao.setInicio_horario(dataInicio[1]);
+			escPadrao.setFim_horario(dataFim[1]);
+			
+			if(escPadrao.getStatus() != 0) {
+				listarEscalaPorColaborador.add(escPadrao);
+			}
+		}
+		
+		return listarEscalaPorColaborador;
 	}
 	
 	public void editarEscalaPadrao(EscalaPadrao escPadrao, int id_escala) throws Exception, SQLException {
