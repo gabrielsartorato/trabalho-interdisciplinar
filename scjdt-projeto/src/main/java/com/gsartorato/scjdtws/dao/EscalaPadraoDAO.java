@@ -62,6 +62,25 @@ public class EscalaPadraoDAO {
 		return 0;
 	}
 	
+	public void editarEscalaPadrao(EscalaPadrao escPadrao, int id_escala) throws Exception, SQLException {
+		
+		Connection conn = DBConfig.getConnection();
+		
+		String sql = "UPDATE escala_padrao SET status = ? WHERE id_escala = ?";
+		
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, escPadrao.getStatus());
+			stmt.setInt(2, id_escala);
+			
+			stmt.execute();
+			stmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public int verificarSeExisteEscalaNoMesmoHorario(int id_colaborador, int id_programacao) throws Exception, SQLException {
 		List<ProgramacaoHoraria> listProgramacaoHoraria = new ArrayList<ProgramacaoHoraria>();
 		ProgramacaoHoraria progHora = null;

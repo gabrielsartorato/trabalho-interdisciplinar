@@ -3,7 +3,9 @@ package com.gsartorato.scjdtws;
 import javax.annotation.PostConstruct;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -40,5 +42,28 @@ public class EscalaPadraoResource {
 			return Response.status(200).entity(e.getMessage()).build();
 		}
 	}
+	
+	@PUT
+	@Path("/edit/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response editEscala(@PathParam("id") int id_escala, EscalaPadrao escPadrao) {
+		String msg = "";
+		
+		try {
+			escalaDao.editarEscalaPadrao(escPadrao, id_escala);
+			
+			msg = "Escala editada com sucesso";
+			
+			return Response.status(200).entity(msg).build();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = e.getMessage();
+			
+			return Response.status(401).entity(msg).build();
+		}
+	}
+	
 	
 }

@@ -79,6 +79,7 @@ CREATE TABLE "escala_padrao" (
   "id_escala" SERIAL PRIMARY KEY,
   "id_programacao" int  NOT NULL,
   "id_colaborador" int NOT NULL,
+  "status" int NOT NULL,
   "created_at" timestamp,
   "updated_at" timestamp
 )
