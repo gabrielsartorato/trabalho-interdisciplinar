@@ -116,4 +116,21 @@ public class ProgramcaoFeriasResource {
 			return Response.status(400).entity(msg).build();
 		}
 	}
+	
+	@GET
+	@Path("/buscar/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarPorId(@PathParam("id") int id_ferias) {
+		
+		try {
+			
+			ProgramacaoFerias progFer = programacaoFeriasDAO.buscarById(id_ferias);
+			
+			return Response.status(200).entity(progFer).build();
+		} catch (Exception e) {
+			String msg = e.getMessage();
+			return Response.status(400).entity(msg).build();
+		}
+	}
 }

@@ -33,7 +33,7 @@ import Scaleedit from './pages/Scale/Scaleedit'
 import Scalelist from './pages/Scale/Scalelist'
 
 import Vacationcreate from './pages/Vacation/Vacationcreate'
-import Vacationedit from './pages/Vacation/Vacationedit'
+// import Vacationedit from './pages/Vacation/Vacationedit'
 import Vacationlist from './pages/Vacation/Vacationlist'
 
 export default function Routes() {
@@ -65,14 +65,14 @@ export default function Routes() {
 
                 <Route path="/collaborator-create" component={Collaboratorcreate}/>
                 <Route path="/collaborator-list" component={Collaboratorlist}/>
-                <Route path="/collaborator-edit/:id" component={Collaboratorlist}/>
+                <Route path="/collaborator-edit/:id" component={Collaboratoredit}/>
 
                 <Route path="/scale-create" component={Scalecreate}/>
                 <Route path="/scale-edit/:id" component={Scaleedit}/>
                 <Route path="/scale-list" component={Scalelist}/>
 
                 <Route path="/vacation-create" component={Vacationcreate}/>
-                <Route path="/vacation-edit/:id" component={Vacationedit}/>
+                {/* <Route path="/vacation-edit/:id" component={Vacationedit}/> */}
                 <Route path="/vacation-list" component={Vacationlist}/>
             </Switch>
         </BrowserRouter>

@@ -9,27 +9,41 @@ import './style.css'
 
 export default function UserCreate(props) {
 
-  const functionUser = props.match.params.id
+  const idVacation = props.match.params.id
 
   const history = useHistory()
 
-  const [name, setName] = useState('')
+  const [collaboratoList, setCollaboratorList] = useState([])
+  const [dateStart, setDateStart] = useState('')
+  const [dateEnd, setDateEnd] = useState('')
+  const [collaboratoId, setCollaboratorId] = useState('')
+  const [collaboratorName, setCollaboratorName] = useState('')
 
   useEffect(() => {
-    api.get(`categoria/buscar/${functionUser}`).then(response => {
-      setName(response.data.nome_categoria)
+    api.get(`ferias/buscar/${idVacation}`).then(response => {
+      setCollaboratorId(response.data.id_colaborador)
+      setDateStart(response.data.data_inicio)
+      setDateEnd(response.data.data_fim)
     })
   }, [])
+
+  // useEffect(() => {
+  //   api.get('colaborador/list').then(response => {
+  //     setCollaboratorList(response.data)
+  //   })
+  // }, [])
 
   async function handleEdit(e) {
     e.preventDefault();
 
     const data = {
-      nome_categoria: name,
+      id_colaborador: collaboratoId,
+      data_inicio: dateStart,
+      data_fima: dateEnd
     }
 
     try {
-      await api.put(`categoria/edit/${functionUser}`, data)
+      await api.put(`ferias/edit/${idVacation}`, data)
 
       history.push('/dashboard')
     }
@@ -52,9 +66,14 @@ export default function UserCreate(props) {
         </section>
         <form onSubmit={handleEdit}>
           <input
-            placeholder="Nome da função"
-            value={name}
-            onChange={e => setName(e.target.value)}
+            placeholder="Nome do colaborador"
+            {...collaboratoList.map(collaborator => {
+              if(collaborator.id_colaborador === collaboratoId) {
+                setCollaboratorName(collaborator.nome_colaborador)
+              }
+            })}
+            value={collaboratorName}
+            disabled
           />
           <button className="button">Editar</button>
         </form>

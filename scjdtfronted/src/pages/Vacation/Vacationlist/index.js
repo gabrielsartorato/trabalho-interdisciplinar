@@ -94,7 +94,7 @@ export default function Categorylist() {
                 <td>{adjustBirthDateToForm(vacation.data_inicio)}</td>
                 <td>{adjustBirthDateToForm(vacation.data_fim)}</td>
                 <td className="action">
-                  <a href={`/category-edit/${vacation.id_ferias}`}><FiEdit /></a>
+                  <a href={`/vacation-edit/${vacation.id_ferias}`}><FiEdit /></a>
                   <button onClick={() => handleConfirm(vacation)}><FiTrash /></button>
                 </td>
               </tr>
