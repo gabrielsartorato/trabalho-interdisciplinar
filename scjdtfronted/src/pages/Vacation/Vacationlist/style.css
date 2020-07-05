@@ -58,7 +58,7 @@
 .user-list {
     width: 100%;
     margin: 0 auto;
-    max-width: 560px;
+    max-width: 1120px;
     margin-top: 32px;
 }
 
@@ -73,19 +73,19 @@
     text-decoration: none;
 }
 
-.action-collaborator {
+.action {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
 }
 
-.action-collaborator a {
+.action a {
     text-align: center;
     padding: 4px;
     background: #81eff37a;
     border-radius: 8px;
 }
 
-.action-collaborator button {
+.action button {
     border-radius: 8px;
     border: none;
 }

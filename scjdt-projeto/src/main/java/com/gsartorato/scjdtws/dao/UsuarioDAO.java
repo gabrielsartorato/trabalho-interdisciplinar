@@ -93,7 +93,7 @@ public class UsuarioDAO {
 			Usuario usuario = new Usuario();
 			
 			usuario.setId_usuario(rs.getInt("id_usuario"));
-			usuario.setNome_usuario(rs.getString("nomeUsuario"));
+			usuario.setNome_usuario(rs.getString("nome_usuario"));
 			usuario.setSenha(rs.getString("senha"));
 			
 			listaUsuario.add(usuario);

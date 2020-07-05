@@ -54,11 +54,13 @@ public class ProgramacaoFeriasDAO {
 				Date dataInicioResource = new SimpleDateFormat("dd/MM/yyyy").parse(data_inicio_resource_format);
 				Date dataFimResource = new SimpleDateFormat("dd/MM/yyyy").parse(data_fim_resource_format);
 				
+				System.out.println(dataInicioResource);
+				System.out.println(dataFimResource);
 				if(dataInicioBanco.equals(dataInicioResource) || dataInicioResource.before(dataInicioBanco)) {
 					throw new RegraNegocioException("Férias não pode ser menor que a data anterior das últimas férias");
 				}
 				
-				if(dataInicioResource.before(dataFimResource)) {
+				if(dataFimResource.before(dataInicioResource)) {
 					throw new RegraNegocioException("Data inicial não pode ser menor que a data final");
 				}
 			}
@@ -137,7 +139,7 @@ public class ProgramacaoFeriasDAO {
 		ProgramacaoFerias progChek = new ProgramacaoFerias();
 		
 		progChek = verificarSeExiste(id_ferias);
-		
+				
 		String[] data_inicio_bd = progChek.getData_inicio().split(" ");
 		String[] data_inicio_format = data_inicio_bd[0].split("-");
 		String data_inicio = data_inicio_format[2]+"/"+data_inicio_format[1]+"/"+data_inicio_format[0];
@@ -243,6 +245,7 @@ public class ProgramacaoFeriasDAO {
 		while(rs.next()) {
 			ProgramacaoFerias progFerias = new ProgramacaoFerias();
 			
+			progFerias.setId_ferias(rs.getInt("id_ferias"));
 			progFerias.setId_colaborador(rs.getInt("id_colaborador"));
 			progFerias.setData_inicio(rs.getTimestamp("data_inicio").toString());
 			progFerias.setData_fim(rs.getTimestamp("data_fim").toString());

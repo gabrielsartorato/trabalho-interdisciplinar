@@ -42,7 +42,7 @@ export default function Category() {
           <Link className="back-link" to="/dashboard">
             <FiArrowLeft size={16} color="#E02041" />
                             Voltar
-                    </Link>
+          </Link>
         </section>
 
         <form onSubmit={handleRegisterCategory}>

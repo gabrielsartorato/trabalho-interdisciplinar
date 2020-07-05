@@ -121,8 +121,6 @@ export default function collaborator() {
       ativo: 1
     }
 
-    console.log(data)
-
     try {
       const response = await api.post('colaborador/add', data)
 
