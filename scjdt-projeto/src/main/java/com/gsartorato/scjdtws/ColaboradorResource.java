@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 import com.gsartorato.scjdtws.dao.ColaboradorDAO;
 import com.gsartorato.scjdtws.entidade.Colaborador;
 import com.gsartorato.scjdtws.exception.RegraNegocioException;
+import com.gsartorato.scjdtws.firebase.CRUDFirebase;
 
 import org.apache.log4j.Logger;
 
@@ -26,10 +27,12 @@ public class ColaboradorResource {
 	final static Logger logger = Logger.getLogger(ColaboradorResource.class);
 	
 	private ColaboradorDAO colDao;
+	private CRUDFirebase crudDAO;
 	
 	@PostConstruct
 	private void init() {
 		colDao = new ColaboradorDAO();
+		crudDAO = new CRUDFirebase();
 	}
 	
 	@POST
@@ -41,6 +44,7 @@ public class ColaboradorResource {
 		
 		try {
 			colDao.inserirColaborador(col);
+			crudDAO.adicionarFirebase(col);
 			
 			msg = "Colaborador criado com sucesso: " + col.getNome_colaborador();
 			
