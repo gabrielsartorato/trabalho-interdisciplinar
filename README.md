@@ -8,7 +8,7 @@ Projeto foi construido como trabalho de conclusão de curso de Analise e Desenvo
 ## Tecnologias utilizadas
 
 Banco de dados: [PostgreSQL](https://www.postgresql.org/)  
-Servidor: [Apache Tomcat 8.5](http://tomcat.apache.org/) 
-Linguagem de Programação: [Java 8](https://www.java.com/pt-BR/) 
+Servidor: [Apache Tomcat 8.5](http://tomcat.apache.org/)  
+Linguagem de Programação: [Java 8](https://www.java.com/pt-BR/)  
 Framework Web: [ReactJS](https://pt-br.reactjs.org/)
 
